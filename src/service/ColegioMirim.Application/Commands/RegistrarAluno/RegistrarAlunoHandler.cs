@@ -1,0 +1,72 @@
+﻿using AutoMapper;
+using ColegioMirim.Application.DTO;
+using ColegioMirim.Core.Messages;
+using ColegioMirim.Domain.Alunos;
+using ColegioMirim.Domain.Usuarios;
+using MediatR;
+
+namespace ColegioMirim.Application.Commands.RegistrarAluno
+{
+    public class RegistrarAlunoHandler : 
+        CommandHandler, 
+        IRequestHandler<RegistrarAlunoCommand, CommandResponse<AlunoDTO>>
+    {
+        private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IAlunoRepository _alunoRepository;
+        private readonly IMapper _mapper;
+
+        public RegistrarAlunoHandler(IAlunoRepository alunoRepository, IUsuarioRepository usuarioRepository, IMapper mapper)
+        {
+            _alunoRepository = alunoRepository;
+            _usuarioRepository = usuarioRepository;
+            _mapper = mapper;
+        }
+
+        public async Task<CommandResponse<AlunoDTO>> Handle(RegistrarAlunoCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.EhValido())
+            {
+                AdicionarErros(request.ValidationResult);
+                return Error<AlunoDTO>();
+            }
+
+            var usuario = await _usuarioRepository.GetByEmail(request.Email);
+            if (usuario is not null)
+            {
+                AdicionarErro("O email já está sendo utilizado");
+                return Error<AlunoDTO>();
+            }
+
+            usuario = new Usuario
+            {
+                Email = request.Email,
+                SenhaHash = Usuario.GerarSenhaHash(request.Senha),
+                TipoUsuario = TipoUsuario.Aluno
+            };
+
+            await _usuarioRepository.Create(usuario);
+
+            var aluno = await _alunoRepository.GetByRA(request.RA);
+            if (aluno is not null)
+            {
+                AdicionarErro("O RA já está sendo utilizado");
+                return Error<AlunoDTO>();
+            }
+
+            aluno = new Aluno
+            {
+                Ativo = true,
+                Nome = request.Nome,
+                RA = request.RA,
+                UsuarioId = usuario.Id
+            };
+
+            await _alunoRepository.Create(aluno);
+
+            var dto = _mapper.Map<AlunoDTO>(aluno);
+            _mapper.Map(usuario, dto);
+
+            return Success(dto);
+        }
+    }
+}

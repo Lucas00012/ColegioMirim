@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\building blocks\ColegioMirim.Core\ColegioMirim.Core.csproj" />
+    <ProjectReference Include="..\ColegioMirim.Domain\ColegioMirim.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,82 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "building blocks", "building blocks", "{C965F22A-0767-4E1E-811E-17571A5715F3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "service", "service", "{1ED12E58-5B58-4719-BE6D-DFD210B64D3F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{7C24946D-81C4-4EF2-95D7-F2EA8E7B6801}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColegioMirim.Core", "src\building blocks\ColegioMirim.Core\ColegioMirim.Core.csproj", "{867512EC-EA00-4EB5-B7CB-6501BCE097DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColegioMirim.Application", "src\service\ColegioMirim.Application\ColegioMirim.Application.csproj", "{D482AFC2-927C-4288-9165-14D4B9BE8D54}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColegioMirim.Domain", "src\service\ColegioMirim.Domain\ColegioMirim.Domain.csproj", "{D38A935B-02D7-42F5-AF32-7672BEB32DEB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColegioMirim.Infrastructure", "src\service\ColegioMirim.Infrastructure\ColegioMirim.Infrastructure.csproj", "{1C2FC6DB-E1F3-4ECF-921B-6292E789EB29}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColegioMirim.API", "src\service\ColegioMirim.API\ColegioMirim.API.csproj", "{448A89D8-EDAB-4465-8163-EFDFEBC524B1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColegioMirim.WebApi.MVC", "src\web\ColegioMirim.WebApi.MVC\ColegioMirim.WebApi.MVC.csproj", "{0BBCD89A-F3BD-4670-AC3A-C38232B049E4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{60F7C466-E7B3-4897-94DE-77B68D1AAA1E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D83FA4E3-297A-493D-914E-700AA1D2F641}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColegioMirim.WebAPI.Core", "src\building blocks\ColegioMirim.WebAPI.Core\ColegioMirim.WebAPI.Core.csproj", "{31328E24-E284-4AC0-BA88-03D6031D171B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{867512EC-EA00-4EB5-B7CB-6501BCE097DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{867512EC-EA00-4EB5-B7CB-6501BCE097DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{867512EC-EA00-4EB5-B7CB-6501BCE097DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{867512EC-EA00-4EB5-B7CB-6501BCE097DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D482AFC2-927C-4288-9165-14D4B9BE8D54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D482AFC2-927C-4288-9165-14D4B9BE8D54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D482AFC2-927C-4288-9165-14D4B9BE8D54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D482AFC2-927C-4288-9165-14D4B9BE8D54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D38A935B-02D7-42F5-AF32-7672BEB32DEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D38A935B-02D7-42F5-AF32-7672BEB32DEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D38A935B-02D7-42F5-AF32-7672BEB32DEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D38A935B-02D7-42F5-AF32-7672BEB32DEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C2FC6DB-E1F3-4ECF-921B-6292E789EB29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C2FC6DB-E1F3-4ECF-921B-6292E789EB29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C2FC6DB-E1F3-4ECF-921B-6292E789EB29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C2FC6DB-E1F3-4ECF-921B-6292E789EB29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{448A89D8-EDAB-4465-8163-EFDFEBC524B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{448A89D8-EDAB-4465-8163-EFDFEBC524B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{448A89D8-EDAB-4465-8163-EFDFEBC524B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{448A89D8-EDAB-4465-8163-EFDFEBC524B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BBCD89A-F3BD-4670-AC3A-C38232B049E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BBCD89A-F3BD-4670-AC3A-C38232B049E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BBCD89A-F3BD-4670-AC3A-C38232B049E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BBCD89A-F3BD-4670-AC3A-C38232B049E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31328E24-E284-4AC0-BA88-03D6031D171B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31328E24-E284-4AC0-BA88-03D6031D171B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31328E24-E284-4AC0-BA88-03D6031D171B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31328E24-E284-4AC0-BA88-03D6031D171B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{867512EC-EA00-4EB5-B7CB-6501BCE097DA} = {C965F22A-0767-4E1E-811E-17571A5715F3}
+		{D482AFC2-927C-4288-9165-14D4B9BE8D54} = {1ED12E58-5B58-4719-BE6D-DFD210B64D3F}
+		{D38A935B-02D7-42F5-AF32-7672BEB32DEB} = {1ED12E58-5B58-4719-BE6D-DFD210B64D3F}
+		{1C2FC6DB-E1F3-4ECF-921B-6292E789EB29} = {1ED12E58-5B58-4719-BE6D-DFD210B64D3F}
+		{448A89D8-EDAB-4465-8163-EFDFEBC524B1} = {1ED12E58-5B58-4719-BE6D-DFD210B64D3F}
+		{0BBCD89A-F3BD-4670-AC3A-C38232B049E4} = {7C24946D-81C4-4EF2-95D7-F2EA8E7B6801}
+		{60F7C466-E7B3-4897-94DE-77B68D1AAA1E} = {1ED12E58-5B58-4719-BE6D-DFD210B64D3F}
+		{D83FA4E3-297A-493D-914E-700AA1D2F641} = {7C24946D-81C4-4EF2-95D7-F2EA8E7B6801}
+		{31328E24-E284-4AC0-BA88-03D6031D171B} = {C965F22A-0767-4E1E-811E-17571A5715F3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D41A5DC5-122A-4A5A-B465-6B8FCAEAD626}
+	EndGlobalSection
+EndGlobal

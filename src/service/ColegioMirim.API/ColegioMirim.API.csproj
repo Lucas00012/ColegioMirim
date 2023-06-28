@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
+    <PackageReference Include="FluentMigrator.Runner.SqlServer" Version="3.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\building blocks\ColegioMirim.Core\ColegioMirim.Core.csproj" />
+    <ProjectReference Include="..\..\building blocks\ColegioMirim.WebAPI.Core\ColegioMirim.WebAPI.Core.csproj" />
+    <ProjectReference Include="..\ColegioMirim.Application\ColegioMirim.Application.csproj" />
+    <ProjectReference Include="..\ColegioMirim.Domain\ColegioMirim.Domain.csproj" />
+    <ProjectReference Include="..\ColegioMirim.Infrastructure\ColegioMirim.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
