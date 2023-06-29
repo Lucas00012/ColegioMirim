@@ -18,7 +18,7 @@ namespace ColegioMirim.WebApi.MVC.Services.Api
             _baseUrlsConfiguration = baseUrlsConfiguration.Value;
         }
 
-        public async Task<Paginacao<ListarAlunosTurmaViewModel>> ListarAlunosTurma(string pesquisa, string orderBy, OrderDirection? direction, int? page, int? pageSize)
+        public async Task<PaginacaoViewModel<ListarAlunosTurmaViewModel>> ListarAlunosTurma(string pesquisa, string orderBy, OrderDirection? direction, int? page, int? pageSize)
         {
             var client = CreateDefaultClient(_baseUrlsConfiguration.ApiColegioMirimUrl);
 
@@ -30,7 +30,7 @@ namespace ColegioMirim.WebApi.MVC.Services.Api
             request.AddParameter("pageSize", pageSize, ParameterType.QueryString);
             AddBearerToken(request);
 
-            var response = await client.ExecuteAsync<Paginacao<ListarAlunosTurmaViewModel>>(request);
+            var response = await client.ExecuteAsync<PaginacaoViewModel<ListarAlunosTurmaViewModel>>(request);
             AssertResponse(response);
 
             return response.Data;
