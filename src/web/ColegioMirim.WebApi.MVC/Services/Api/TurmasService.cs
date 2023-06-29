@@ -4,19 +4,20 @@ using ColegioMirim.WebApi.MVC.Models.Response;
 using Microsoft.Extensions.Options;
 using RestSharp;
 using ColegioMirim.WebApi.MVC.Models;
+using ColegioMirim.WebAPI.Core.Identity;
 
-namespace ColegioMirim.WebApi.MVC.Services
+namespace ColegioMirim.WebApi.MVC.Services.Api
 {
     public class TurmasService : Service
     {
         private readonly BaseUrlsConfiguration _baseUrlsConfiguration;
 
-        public TurmasService(IOptions<BaseUrlsConfiguration> baseUrlsConfiguration)
+        public TurmasService(IOptions<BaseUrlsConfiguration> baseUrlsConfiguration, UserSession userSession) : base(userSession)
         {
             _baseUrlsConfiguration = baseUrlsConfiguration.Value;
         }
 
-        public async Task<PaginacaoViewModel<ListarTurmasViewModel>> ListarTurmas(string pesquisa, string orderBy, OrderDirection? direction, int? page, int? pageSize)
+        public async Task<Paginacao<ListarTurmasViewModel>> ListarTurmas(string pesquisa, string orderBy, OrderDirection? direction, int? page, int? pageSize)
         {
             var client = CreateDefaultClient(_baseUrlsConfiguration.ApiColegioMirimUrl);
 
@@ -26,8 +27,9 @@ namespace ColegioMirim.WebApi.MVC.Services
             request.AddParameter("direction", direction, ParameterType.QueryString);
             request.AddParameter("page", page, ParameterType.QueryString);
             request.AddParameter("pageSize", pageSize, ParameterType.QueryString);
+            AddBearerToken(request);
 
-            var response = await client.ExecuteAsync<PaginacaoViewModel<ListarTurmasViewModel>>(request);
+            var response = await client.ExecuteAsync<Paginacao<ListarTurmasViewModel>>(request);
             AssertResponse(response);
 
             return response.Data;
@@ -38,6 +40,7 @@ namespace ColegioMirim.WebApi.MVC.Services
             var client = CreateDefaultClient(_baseUrlsConfiguration.ApiColegioMirimUrl);
 
             var request = new RestRequest($"/api/turmas/{id}", Method.Get);
+            AddBearerToken(request);
 
             var response = await client.ExecuteAsync<ObterTurmaViewModel>(request);
             AssertResponse(response);
@@ -51,6 +54,7 @@ namespace ColegioMirim.WebApi.MVC.Services
 
             var request = new RestRequest($"/api/turmas/{id}", Method.Put);
             request.AddBody(turmaViewModel);
+            AddBearerToken(request);
 
             var response = await client.ExecuteAsync<ObterTurmaViewModel>(request);
             AssertResponse(response);
@@ -64,6 +68,7 @@ namespace ColegioMirim.WebApi.MVC.Services
 
             var request = new RestRequest("/api/turmas", Method.Post);
             request.AddBody(turmaViewModel);
+            AddBearerToken(request);
 
             var response = await client.ExecuteAsync<ObterTurmaViewModel>(request);
             AssertResponse(response);

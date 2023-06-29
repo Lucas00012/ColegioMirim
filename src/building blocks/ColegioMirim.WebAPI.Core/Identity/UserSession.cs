@@ -30,7 +30,7 @@ namespace ColegioMirim.WebAPI.Core.Identity
         public bool IsAluno => Roles?.Contains("aluno") ?? false;
         public List<string> Roles { get; private set; }
 
-        private string ExtractClaimValue(string type)
+        public string ExtractClaimValue(string type)
         {
             return _httpContext?.User.Claims
                 .FirstOrDefault(c => c.Type == type)?.Value;

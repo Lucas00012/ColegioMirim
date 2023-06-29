@@ -1,14 +1,22 @@
 ﻿using ColegioMirim.WebApi.MVC.Common.Exceptions;
+using ColegioMirim.WebAPI.Core.Identity;
 using RestSharp;
 using RestSharp.Serializers.Json;
 using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace ColegioMirim.WebApi.MVC.Services
+namespace ColegioMirim.WebApi.MVC.Services.Api
 {
     public abstract class Service
     {
+        private readonly UserSession _userSession;
+
+        protected Service(UserSession userSession)
+        {
+            _userSession = userSession;
+        }
+
         protected RestClient CreateDefaultClient(string baseUrl)
         {
             var jsonOptions = new JsonSerializerOptions
@@ -25,6 +33,14 @@ namespace ColegioMirim.WebApi.MVC.Services
 
             return client;
         }
+
+        protected void AddBearerToken(RestRequest restRequest)
+        {
+            var token = _userSession.ExtractClaimValue("JWT");
+
+            if (token is not null)
+                restRequest.AddHeader("Authorization", $"Bearer {token}");
+        } 
 
         protected void AssertResponse(RestResponse response)
         {

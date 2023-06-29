@@ -1,22 +1,23 @@
 ﻿using ColegioMirim.WebApi.MVC.Configuration.Settings;
 using ColegioMirim.WebApi.MVC.Models;
 using ColegioMirim.WebApi.MVC.Models.Response;
+using ColegioMirim.WebAPI.Core.Identity;
 using ColegioMirim.WebAPI.Core.Paginator;
 using Microsoft.Extensions.Options;
 using RestSharp;
 
-namespace ColegioMirim.WebApi.MVC.Services
+namespace ColegioMirim.WebApi.MVC.Services.Api
 {
     public class AlunosService : Service
     {
         private readonly BaseUrlsConfiguration _baseUrlsConfiguration;
 
-        public AlunosService(IOptions<BaseUrlsConfiguration> baseUrlsConfiguration)
+        public AlunosService(IOptions<BaseUrlsConfiguration> baseUrlsConfiguration, UserSession userSession) : base(userSession)
         {
             _baseUrlsConfiguration = baseUrlsConfiguration.Value;
         }
 
-        public async Task<PaginacaoViewModel<ListarAlunosViewModel>> ListarAlunos(string pesquisa, string orderBy, OrderDirection? direction, int? page, int? pageSize)
+        public async Task<Paginacao<ListarAlunosViewModel>> ListarAlunos(string pesquisa, string orderBy, OrderDirection? direction, int? page, int? pageSize)
         {
             var client = CreateDefaultClient(_baseUrlsConfiguration.ApiColegioMirimUrl);
 
@@ -26,8 +27,9 @@ namespace ColegioMirim.WebApi.MVC.Services
             request.AddParameter("direction", direction, ParameterType.QueryString);
             request.AddParameter("page", page, ParameterType.QueryString);
             request.AddParameter("pageSize", pageSize, ParameterType.QueryString);
+            AddBearerToken(request);
 
-            var response = await client.ExecuteAsync<PaginacaoViewModel<ListarAlunosViewModel>>(request);
+            var response = await client.ExecuteAsync<Paginacao<ListarAlunosViewModel>>(request);
             AssertResponse(response);
 
             return response.Data;
@@ -38,6 +40,7 @@ namespace ColegioMirim.WebApi.MVC.Services
             var client = CreateDefaultClient(_baseUrlsConfiguration.ApiColegioMirimUrl);
 
             var request = new RestRequest($"/api/alunos/{id}", Method.Get);
+            AddBearerToken(request);
 
             var response = await client.ExecuteAsync<ObterAlunoViewModel>(request);
             AssertResponse(response);
@@ -51,6 +54,7 @@ namespace ColegioMirim.WebApi.MVC.Services
 
             var request = new RestRequest($"/api/alunos/{id}", Method.Put);
             request.AddBody(alunoViewModel);
+            AddBearerToken(request);
 
             var response = await client.ExecuteAsync<ObterAlunoViewModel>(request);
             AssertResponse(response);
@@ -64,6 +68,7 @@ namespace ColegioMirim.WebApi.MVC.Services
 
             var request = new RestRequest("/api/alunos", Method.Post);
             request.AddBody(alunoViewModel);
+            AddBearerToken(request);
 
             var response = await client.ExecuteAsync<ObterAlunoViewModel>(request);
             AssertResponse(response);
