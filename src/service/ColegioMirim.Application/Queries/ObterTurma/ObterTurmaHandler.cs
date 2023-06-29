@@ -2,42 +2,46 @@
 using ColegioMirim.Application.DTO;
 using ColegioMirim.Domain.AlunosTurma;
 using ColegioMirim.Domain.Turmas;
+using ColegioMirim.Infrastructure.Data;
 using ColegioMirim.WebAPI.Core.Identity;
+using Dapper;
 using MediatR;
 
 namespace ColegioMirim.Application.Queries.ObterTurma
 {
     public class ObterTurmaHandler : IRequestHandler<ObterTurmaQuery, TurmaDTO>
     {
-        private readonly ITurmaRepository _turmaRepository;
-        private readonly IAlunoTurmaRepository _alunoTurmaRepository;
         private readonly UserSession _userSession;
-        private readonly IMapper _mapper;
+        private readonly ColegioMirimContext _context;
 
-        public ObterTurmaHandler(IMapper mapper, UserSession userSession, ITurmaRepository turmaRepository, IAlunoTurmaRepository alunoTurmaRepository)
+        public ObterTurmaHandler(UserSession userSession, ColegioMirimContext context)
         {
-            _mapper = mapper;
             _userSession = userSession;
-            _turmaRepository = turmaRepository;
-            _alunoTurmaRepository = alunoTurmaRepository;
+            _context = context;
         }
 
         public async Task<TurmaDTO> Handle(ObterTurmaQuery request, CancellationToken cancellationToken)
         {
-            var turma = await _turmaRepository.GetById(request.Id);
+            var dto = await _context.Connection.QuerySingleAsync<TurmaDTO>(@"
+                SELECT
+                    t.Id,
+                    t.Nome,
+                    t.Ativo,
+                    t.Ano,
+                    t.CreatedAt AS CriadoEm
+                FROM Turma AS t
+                WHERE t.Id = @Id AND 
+                (
+                    @IsAdmin = 1 
+                    OR EXISTS
+                    (
+                        SELECT 1 FROM AlunoTurma AS at
+                        INNER JOIN Aluno AS a ON a.Id = at.AlunoId
+                        WHERE at.TurmaId = t.Id AND a.UsuarioId = @UsuarioId AND at.Ativo = 1
+                    )
+                )
+            ", new { request.Id, _userSession.IsAdmin, _userSession.UsuarioId });
 
-            if (turma is null)
-                return null;
-
-            if (!_userSession.IsAdmin)
-            {
-                var vinculo = await _alunoTurmaRepository.GetByUsuarioIdTurmaId(_userSession.UsuarioId.Value, request.Id);
-
-                if (vinculo is null || !vinculo.Ativo)
-                    return null;
-            }
-
-            var dto = _mapper.Map<TurmaDTO>(turma);
             return dto;
         }
     }

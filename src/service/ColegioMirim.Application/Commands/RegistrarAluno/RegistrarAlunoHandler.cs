@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ColegioMirim.Application.DTO;
+using ColegioMirim.Application.Queries.ObterAluno;
 using ColegioMirim.Core.Messages;
 using ColegioMirim.Domain.Alunos;
 using ColegioMirim.Domain.Usuarios;
@@ -13,13 +14,13 @@ namespace ColegioMirim.Application.Commands.RegistrarAluno
     {
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IAlunoRepository _alunoRepository;
-        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public RegistrarAlunoHandler(IAlunoRepository alunoRepository, IUsuarioRepository usuarioRepository, IMapper mapper)
+        public RegistrarAlunoHandler(IAlunoRepository alunoRepository, IUsuarioRepository usuarioRepository, IMediator mediator)
         {
             _alunoRepository = alunoRepository;
             _usuarioRepository = usuarioRepository;
-            _mapper = mapper;
+            _mediator = mediator;
         }
 
         public async Task<CommandResponse<AlunoDTO>> Handle(RegistrarAlunoCommand request, CancellationToken cancellationToken)
@@ -63,8 +64,10 @@ namespace ColegioMirim.Application.Commands.RegistrarAluno
 
             await _alunoRepository.Create(aluno);
 
-            var dto = _mapper.Map<AlunoDTO>(aluno);
-            _mapper.Map(usuario, dto);
+            var dto = await _mediator.Send(new ObterAlunoQuery
+            {
+                Id = aluno.Id
+            }, cancellationToken);
 
             return Success(dto);
         }

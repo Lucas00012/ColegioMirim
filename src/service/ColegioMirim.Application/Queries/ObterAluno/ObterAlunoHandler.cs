@@ -2,40 +2,38 @@
 using ColegioMirim.Application.DTO;
 using ColegioMirim.Domain.Alunos;
 using ColegioMirim.Domain.Usuarios;
+using ColegioMirim.Infrastructure.Data;
 using ColegioMirim.WebAPI.Core.Identity;
+using Dapper;
 using MediatR;
 
 namespace ColegioMirim.Application.Queries.ObterAluno
 {
     public class ObterAlunoHandler : IRequestHandler<ObterAlunoQuery, AlunoDTO>
     {
-        private readonly IAlunoRepository _alunoRepository;
-        private readonly IUsuarioRepository _usuarioRepository;
         private readonly UserSession _userSession;
-        private readonly IMapper _mapper;
+        private readonly ColegioMirimContext _context;
 
-        public ObterAlunoHandler(UserSession userSession, IAlunoRepository alunoRepository, IMapper mapper, IUsuarioRepository usuarioRepository)
+        public ObterAlunoHandler(UserSession userSession, ColegioMirimContext context)
         {
             _userSession = userSession;
-            _alunoRepository = alunoRepository;
-            _mapper = mapper;
-            _usuarioRepository = usuarioRepository;
+            _context = context;
         }
 
         public async Task<AlunoDTO> Handle(ObterAlunoQuery request, CancellationToken cancellationToken)
         {
-            var aluno = await _alunoRepository.GetById(request.Id);
-
-            if (aluno is null)
-                return null;
-
-            if (!_userSession.IsAdmin && (aluno.UsuarioId != _userSession.UsuarioId || !aluno.Ativo))
-                return null;
-
-            var usuario = await _usuarioRepository.GetById(aluno.UsuarioId);
-
-            var dto = _mapper.Map<AlunoDTO>(aluno);
-            _mapper.Map(usuario, dto);
+            var dto = await _context.Connection.QuerySingleAsync<AlunoDTO>(@"
+                SELECT
+                    a.Id,
+                    a.RA,
+                    a.Nome,
+                    u.Email,
+                    a.Ativo,
+                    a.CreatedAt AS CriadoEm
+                FROM Aluno AS a
+                INNER JOIN Usuario AS u ON u.Id = a.UsuarioId
+                WHERE a.Id = @Id AND (@IsAdmin = 1 OR a.UsuarioId = @UsuarioId AND a.Ativo = 1)
+            ", new { request.Id, _userSession.IsAdmin, _userSession.UsuarioId });
 
             return dto;
         }

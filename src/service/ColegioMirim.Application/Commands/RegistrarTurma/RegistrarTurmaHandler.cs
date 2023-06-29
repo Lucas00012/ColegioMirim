@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ColegioMirim.Application.DTO;
+using ColegioMirim.Application.Queries.ObterTurma;
 using ColegioMirim.Core.Messages;
 using ColegioMirim.Domain.Turmas;
 using MediatR;
@@ -11,12 +12,12 @@ namespace ColegioMirim.Application.Commands.RegistrarTurma
         IRequestHandler<RegistrarTurmaCommand, CommandResponse<TurmaDTO>>
     {
         private readonly ITurmaRepository _turmaRepository;
-        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public RegistrarTurmaHandler(ITurmaRepository turmaRepository, IMapper mapper)
+        public RegistrarTurmaHandler(ITurmaRepository turmaRepository, IMediator mediator)
         {
             _turmaRepository = turmaRepository;
-            _mapper = mapper;
+            _mediator = mediator;
         }
 
         public async Task<CommandResponse<TurmaDTO>> Handle(RegistrarTurmaCommand request, CancellationToken cancellationToken)
@@ -43,7 +44,11 @@ namespace ColegioMirim.Application.Commands.RegistrarTurma
 
             await _turmaRepository.Create(turma);
 
-            var dto = _mapper.Map<TurmaDTO>(turma);
+            var dto = await _mediator.Send(new ObterTurmaQuery
+            {
+                Id = turma.Id
+            }, cancellationToken);
+
             return Success(dto);
         }
     }
