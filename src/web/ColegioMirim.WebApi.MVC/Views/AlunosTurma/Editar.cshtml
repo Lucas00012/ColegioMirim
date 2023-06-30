@@ -1,8 +1,10 @@
 ﻿@model EditarAlunoTurmaViewModel
+@inject IOptions<BaseUrlsConfiguration> baseUrlsConfiguration
+@inject UserSession userSession
 @{
     ViewData["Title"] = "Alunos/Turma";
-
     var alunoTurma = ViewBag.AlunoTurma as ObterAlunoTurmaViewModel;
+    var baseUrls = baseUrlsConfiguration.Value;
 }
 
 <section class="section-conten padding-y container" style="min-height:45vh">
@@ -16,28 +18,19 @@
 
         <div class="card-body">
             <h4 class="card-title mb-4">Editar vínculo</h4>
-            <form method="post" asp-route-id="@ViewBag.AlunoId">
+            <form method="post" asp-route-id="@ViewContext.FromRoute("id")">
+                <input asp-for="AlunoId" type="hidden" class="form-control" />
+                <input asp-for="TurmaId" type="hidden" class="form-control" />
+
                 <div class="form-group">
                     <label>Aluno</label>
-                    <input value="@alunoTurma.AlunoNome" readonly class="form-control" />
+                    <input value="[RA]: @alunoTurma.AlunoRA [Nome]: @alunoTurma.AlunoNome" class="form-control" id="txtAluno" />
                 </div>
 
                 <div class="form-group">
                     <label>Turma</label>
-                    <input value="@alunoTurma.TurmaNome" readonly class="form-control" />
+                    <input value="[Ano]: @alunoTurma.TurmaAno [Nome]: @alunoTurma.TurmaNome" class="form-control" id="txtTurma" />
                 </div>
-
-@*                <div class="form-group">
-                    <label asp-for="Nome"></label>
-                    <input asp-for="Nome" class="form-control" />
-                    <span asp-validation-for="Nome" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="RA"></label>
-                    <input asp-for="RA" class="form-control" />
-                    <span asp-validation-for="RA" class="text-danger"></span>
-                </div>*@
 
                 <div class="form-group mt-3 mb-3">
                     <input type="checkbox" asp-for="Ativo" class="form-check-input" />
@@ -53,3 +46,73 @@
     </div>
 
 </section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $("#txtAluno").autocomplete({
+            source: function (request, response) {
+                console.log(request, response);
+                $.ajax({
+                    url: '@baseUrls.ApiColegioMirimUrl/api/alunos?pageSize=10&pesquisa=' + request.term,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", "Bearer @userSession.ExtractClaimValue("JWT")");
+                    },
+                    type: "GET",
+                    success: function (data) {
+                        response($.map(data.items, function (item) {
+                            return {
+                                label: "[RA]: " + item.ra + " [Nome]: " + item.nome,
+                                value: item.id
+                            };
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (event, i) {
+                event.preventDefault();
+                $("#txtAluno").val(i.item.label);
+                $("#AlunoId").val(i.item.value);
+            }
+        });
+
+        $("#txtTurma").autocomplete({
+            source: function (request, response) {
+                console.log(request, response);
+                $.ajax({
+                    url: '@baseUrls.ApiColegioMirimUrl/api/turmas?pageSize=10&pesquisa=' + request.term,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", "Bearer @userSession.ExtractClaimValue("JWT")");
+                    },
+                    type: "GET",
+                    success: function (data) {
+                        response($.map(data.items, function (item) {
+                            return {
+                                label: "[Ano]: " + item.ano + " [Nome]: " + item.nome,
+                                value: item.id
+                            };
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (event, i) {
+                event.preventDefault();
+                $("#txtTurma").val(i.item.label);
+                $("#TurmaId").val(i.item.value);
+            }
+        });
+    </script>
+}

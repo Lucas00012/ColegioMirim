@@ -17,12 +17,10 @@ namespace ColegioMirim.API.Controllers
     public class AlunosTurmaController : MainController
     {
         private readonly IMediator _mediator;
-        private readonly UserSession _userSession;
 
-        public AlunosTurmaController(IMediator mediator, UserSession userSession)
+        public AlunosTurmaController(IMediator mediator)
         {
             _mediator = mediator;
-            _userSession = userSession;
         }
 
         [HttpGet]
@@ -40,23 +38,25 @@ namespace ColegioMirim.API.Controllers
             return Ok(query);
         }
 
-        [HttpGet("{alunoId}/{turmaId}")]
-        public async Task<IActionResult> ObterAlunoTurma(int alunoId, int turmaId)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> ObterAlunoTurma(int id)
         {
             var query = await _mediator.Send(new ObterAlunoTurmaQuery
             {
-                AlunoId = alunoId,
-                TurmaId = turmaId
+                Id = id
             });
+
+            if (query is null)
+                return NotFound();
 
             return Ok(query);
         }
 
-        [HttpPut("{alunoId}/{turmaId}")]
-        public async Task<IActionResult> EditarAlunoTurma(int alunoId, int turmaId, EditarAlunoTurmaCommand command)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditarAlunoTurma(int id, EditarAlunoTurmaCommand command)
         {
-            command.AlunoId = alunoId;
-            command.TurmaId = turmaId;
+            command.Id = id;
+
             var result = await _mediator.Send(command);
             return CustomResponse(result);
         }
@@ -68,13 +68,12 @@ namespace ColegioMirim.API.Controllers
             return CustomResponse(result);
         }
 
-        [HttpDelete("{alunoId}/{turmaId}")]
-        public async Task<IActionResult> RemoverAlunoTurma(int alunoId, int turmaId)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoverAlunoTurma(int id)
         {
             var result = await _mediator.Send(new RemoverAlunoTurmaCommand
             {
-                AlunoId = alunoId,
-                TurmaId = turmaId
+                Id = id
             });
 
             return CustomResponse(result);

@@ -27,17 +27,18 @@ namespace ColegioMirim.Infrastructure.Data.Repository
             var sql = @"
                 INSERT INTO 
                     AlunoTurma (Ativo, AlunoId, TurmaId, CreatedAt, UpdatedAt)
+                OUTPUT INSERTED.Id
                 VALUES (@Ativo, @AlunoId, @TurmaId, @CreatedAt, null)
             ";
 
-            await _context.Connection.ExecuteAsync(sql, alunoTurma);
+            alunoTurma.Id = await _context.Connection.QuerySingleAsync<int>(sql, alunoTurma);
 
             return alunoTurma;
         }
 
         public async Task<int> Delete(AlunoTurma alunoTurma)
         {
-            var sql = "DELETE FROM AlunoTurma WHERE AlunoId = @AlunoId AND TurmaId = @TurmaId";
+            var sql = "DELETE FROM AlunoTurma WHERE Id = @Id";
             var result = await _context.Connection.ExecuteAsync(sql, alunoTurma);
 
             return result;
@@ -49,6 +50,14 @@ namespace ColegioMirim.Infrastructure.Data.Repository
             var alunosTurma = await _context.Connection.QueryAsync<AlunoTurma>(sql);
 
             return alunosTurma.ToList();
+        }
+
+        public async Task<AlunoTurma> GetById(int id)
+        {
+            var sql = "SELECT * FROM AlunoTurma WHERE Id = @Id";
+            var alunosTurma = await _context.Connection.QuerySingleOrDefaultAsync<AlunoTurma>(sql, new { Id = id });
+
+            return alunosTurma;
         }
 
         public async Task<AlunoTurma> GetByAlunoIdTurmaId(int alunoId, int turmaId)
@@ -82,7 +91,7 @@ namespace ColegioMirim.Infrastructure.Data.Repository
         {
             alunoTurma.UpdatedAt = DateTimeOffset.Now;
 
-            var sql = "UPDATE AlunoTurma SET AlunoId = @AlunoId, TurmaId = @TurmaId, Ativo = @Ativo, CreatedAt = @CreatedAt, UpdatedAt = @UpdatedAt WHERE AlunoId = @AlunoId AND TurmaId = @TurmaId";
+            var sql = "UPDATE AlunoTurma SET AlunoId = @AlunoId, TurmaId = @TurmaId, Ativo = @Ativo, CreatedAt = @CreatedAt, UpdatedAt = @UpdatedAt WHERE Id = @Id";
             var result = await _context.Connection.ExecuteAsync(sql, alunoTurma);
 
             return result;

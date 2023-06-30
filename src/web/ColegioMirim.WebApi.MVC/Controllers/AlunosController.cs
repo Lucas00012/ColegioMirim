@@ -37,7 +37,6 @@ namespace ColegioMirim.WebApi.MVC.Controllers
                 RA = aluno.RA
             };
 
-            ViewBag.AlunoId = aluno.Id;
             return View(model);
         }
 

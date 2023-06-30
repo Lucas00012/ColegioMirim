@@ -14,31 +14,40 @@
         <a class="btn btn-outline-secondary" asp-action="Registrar" asp-controller="AlunosTurma">Cadastrar</a>
     </form>
 
-    <table class="table mt-5">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">Aluno</th>
-                <th scope="col">Turma</th>
-                <th scope="col">Ativo</th>
-                <th scope="col">Vinculado em</th>
-                <th scope="col">Opções</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var alunoTurma in Model.Items)
-            {
+    @if (Model.Items.Any())
+    {
+        <table class="table mt-5">
+            <thead class="thead-dark">
                 <tr>
-                    <td>@alunoTurma.AlunoNome</td>
-                    <td>@alunoTurma.TurmaNome</td>
-                    <td>@(alunoTurma.Ativo ? "Sim" : "Não")</td>
-                    <td>@alunoTurma.VinculadoEm.ToString("dd/MM/yyyy")</td>
-                    <td>
-                        <a class="btn btn-warning" asp-action="Editar" asp-controller="AlunosTurma" asp-route-alunoId="@alunoTurma.AlunoId" asp-route-turmaId="@alunoTurma.TurmaId">Editar</a>
-                    </td>
+                    <th scope="col">Aluno</th>
+                    <th scope="col">Turma</th>
+                    <th scope="col">Ativo</th>
+                    <th scope="col">Vinculado em</th>
+                    <th scope="col">Opções</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var alunoTurma in Model.Items)
+                {
+                    <tr>
+                        <td>@alunoTurma.AlunoNome</td>
+                        <td>@alunoTurma.TurmaNome</td>
+                        <td>@(alunoTurma.Ativo ? "Sim" : "Não")</td>
+                        <td>@alunoTurma.VinculadoEm.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <a class="btn btn-warning" asp-action="Editar" asp-controller="AlunosTurma" asp-route-id="@alunoTurma.Id">Editar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-    <vc:paginacao paginacao="@Model"></vc:paginacao>
+        <vc:paginacao paginacao="@Model"></vc:paginacao>
+    }
+    else
+    {
+        <div class="alert alert-primary mt-5" role="alert">
+            Não foram encontrados vínculos para exibir
+        </div>
+    }
 </div>

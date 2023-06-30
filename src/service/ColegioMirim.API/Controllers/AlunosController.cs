@@ -45,6 +45,9 @@ namespace ColegioMirim.API.Controllers
                 Id = id
             });
 
+            if (query is null)
+                return NotFound();
+
             return Ok(query);
         }
 
@@ -53,6 +56,7 @@ namespace ColegioMirim.API.Controllers
         public async Task<IActionResult> EditarAluno(int id, EditarAlunoCommand command)
         {
             command.Id = id;
+
             var result = await _mediator.Send(command);
             return CustomResponse(result);
         }

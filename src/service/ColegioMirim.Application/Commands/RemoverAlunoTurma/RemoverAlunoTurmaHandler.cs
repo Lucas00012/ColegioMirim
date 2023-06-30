@@ -16,7 +16,7 @@ namespace ColegioMirim.Application.Commands.RemoverAlunoTurma
 
         public async Task<CommandResponse> Handle(RemoverAlunoTurmaCommand request, CancellationToken cancellationToken)
         {
-            var alunoTurma = await _alunoTurmaRepository.GetByAlunoIdTurmaId(request.AlunoId, request.TurmaId);
+            var alunoTurma = await _alunoTurmaRepository.GetById(request.Id);
             if (alunoTurma is null)
             {
                 AdicionarErro("Relação não encontrada");

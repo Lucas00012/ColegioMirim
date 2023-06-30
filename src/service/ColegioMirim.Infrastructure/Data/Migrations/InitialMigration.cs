@@ -18,6 +18,7 @@ namespace ColegioMirim.Infrastructure.Data.Migrations
                 .WithColumn("UpdatedAt").AsDateTimeOffset().Nullable();
 
             Create.Table("AlunoTurma")
+                .WithColumn("Id").AsInt32().NotNullable().PrimaryKey().Identity()
                 .WithColumn("Ativo").AsBoolean().WithDefaultValue(true)
                 .WithColumn("AlunoId").AsInt32().NotNullable()
                 .WithColumn("TurmaId").AsInt32().NotNullable()
@@ -39,9 +40,6 @@ namespace ColegioMirim.Infrastructure.Data.Migrations
                 .WithColumn("CreatedAt").AsDateTimeOffset().NotNullable()
                 .WithColumn("UpdatedAt").AsDateTimeOffset().Nullable()
                 .WithColumn("TipoUsuario").AsAnsiString(60).NotNullable();
-
-            Create.PrimaryKey("PK_AlunoTurma")
-                .OnTable("AlunoTurma").Columns("AlunoId", "TurmaId");
 
             Create.ForeignKey("FK_Aluno_Usuario")
                 .FromTable("Aluno").ForeignColumn("UsuarioId")

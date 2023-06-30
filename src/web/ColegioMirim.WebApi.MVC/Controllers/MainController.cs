@@ -1,5 +1,6 @@
 ﻿using ColegioMirim.Core.Communication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace ColegioMirim.WebApi.MVC.Controllers
 {
@@ -16,6 +17,14 @@ namespace ColegioMirim.WebApi.MVC.Controllers
             }
 
             return false;
+        }
+
+        protected string[] ExtrairErros(ModelStateDictionary state)
+        {
+            return state.Values
+                .SelectMany(c => c.Errors)
+                .Select(c => c.ErrorMessage)
+                .ToArray();
         }
 
         protected void AdicionarErroValidacao(string mensagem)

@@ -14,7 +14,7 @@
 
         <div class="card-body">
             <h4 class="card-title mb-4">Editar turma</h4>
-            <form method="post" asp-route-id="@ViewBag.TurmaId">
+            <form method="post" asp-route-id="@ViewContext.FromRoute("id")">
                 <div class="form-group">
                     <label asp-for="Nome"></label>
                     <input asp-for="Nome" class="form-control" />
@@ -40,3 +40,7 @@
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

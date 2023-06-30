@@ -22,21 +22,29 @@ namespace ColegioMirim.Application.Commands.EditarAlunoTurma
 
         public async Task<CommandResponse<AlunoTurmaDTO>> Handle(EditarAlunoTurmaCommand request, CancellationToken cancellationToken)
         {
-            var alunoTurma = await _alunoTurmaRepository.GetByAlunoIdTurmaId(request.AlunoId, request.TurmaId);
+            var alunoTurma = await _alunoTurmaRepository.GetById(request.Id);
             if (alunoTurma is null)
             {
                 AdicionarErro("Relação não encontrada");
                 return Error<AlunoTurmaDTO>(HttpStatusCode.NotFound);
             }
 
+            var alunoTurmaPorAlunoIdTurmaId = await _alunoTurmaRepository.GetByAlunoIdTurmaId(request.AlunoId, request.TurmaId);
+            if (alunoTurmaPorAlunoIdTurmaId is not null && alunoTurma.Id != alunoTurmaPorAlunoIdTurmaId.Id)
+            {
+                AdicionarErro("Relação já existe");
+                return Error<AlunoTurmaDTO>(HttpStatusCode.BadRequest);
+            }
+
+            alunoTurma.AlunoId = request.AlunoId;
+            alunoTurma.TurmaId = request.TurmaId;
             alunoTurma.Ativo = request.Ativo;
 
             await _alunoTurmaRepository.Update(alunoTurma);
 
             var dto = await _mediator.Send(new ObterAlunoTurmaQuery
             {
-                AlunoId = request.AlunoId,
-                TurmaId = request.TurmaId
+                Id = request.Id
             }, cancellationToken);
 
             return Success(dto);

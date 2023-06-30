@@ -40,8 +40,7 @@ namespace ColegioMirim.Application.Commands.RegistrarAlunoTurma
 
             var dto = await _mediator.Send(new ObterAlunoTurmaQuery
             {
-                AlunoId = request.AlunoId,
-                TurmaId = request.TurmaId
+                Id = alunoTurma.Id
             }, cancellationToken);
 
             return Success(dto);

@@ -3,6 +3,7 @@ using ColegioMirim.WebApi.MVC.Services.Api;
 using ColegioMirim.WebAPI.Core.Paginator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace ColegioMirim.WebApi.MVC.Controllers
 {
@@ -24,13 +25,15 @@ namespace ColegioMirim.WebApi.MVC.Controllers
             return View(alunosTurma);
         }
 
-        [HttpGet("/AlunosTurma/Editar/{alunoId}/{turmaId}")]
-        public async Task<IActionResult> Editar(int alunoId, int turmaId)
+        [HttpGet("/AlunosTurma/Editar/{id}")]
+        public async Task<IActionResult> Editar(int id)
         {
-            var alunoTurma = await _alunosTurmaService.ObterAlunoTurma(alunoId, turmaId);
+            var alunoTurma = await _alunosTurmaService.ObterAlunoTurma(id);
 
             var model = new EditarAlunoTurmaViewModel
             {
+                AlunoId = alunoTurma.AlunoId,
+                TurmaId = alunoTurma.TurmaId,
                 Ativo = alunoTurma.Ativo
             };
 
@@ -38,16 +41,19 @@ namespace ColegioMirim.WebApi.MVC.Controllers
             return View(model);
         }
 
-        [HttpPost("/AlunosTurma/Editar/{alunoId}/{turmaId}")]
-        public async Task<IActionResult> Editar(int alunoId, int turmaId, EditarAlunoTurmaViewModel model)
+        [HttpPost("/AlunosTurma/Editar/{id}")]
+        public async Task<IActionResult> Editar(int id, EditarAlunoTurmaViewModel model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
-            var resposta = await _alunosTurmaService.EditarAlunoTurma(alunoId, turmaId, model);
+            var resposta = await _alunosTurmaService.EditarAlunoTurma(id, model);
 
             if (PossuiErros(resposta))
-                return View(model);
+            {
+                TempData["Erros"] = ExtrairErros(ModelState);
+                return RedirectToAction("Editar", new { Id = id });
+            }
 
             return RedirectToAction("Index");
         }

@@ -1,8 +1,11 @@
-﻿namespace ColegioMirim.Domain.AlunosTurma
+﻿using MediatR;
+
+namespace ColegioMirim.Domain.AlunosTurma
 {
     public interface IAlunoTurmaRepository
     {
         Task<List<AlunoTurma>> GetAll();
+        Task<AlunoTurma> GetById(int id);
         Task<AlunoTurma> GetByAlunoIdTurmaId(int alunoId, int turmaId);
         Task<AlunoTurma> GetByUsuarioIdTurmaId(int usuarioId, int turmaId);
         Task<int> Update(AlunoTurma alunoTurma);

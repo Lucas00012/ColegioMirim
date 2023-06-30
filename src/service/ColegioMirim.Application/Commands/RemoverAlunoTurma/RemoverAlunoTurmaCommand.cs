@@ -5,7 +5,6 @@ namespace ColegioMirim.Application.Commands.RemoverAlunoTurma
 {
     public class RemoverAlunoTurmaCommand : IRequest<CommandResponse>
     {
-        public int AlunoId { get; set; }
-        public int TurmaId { get; set; }
+        public int Id { get; set; }
     }
 }

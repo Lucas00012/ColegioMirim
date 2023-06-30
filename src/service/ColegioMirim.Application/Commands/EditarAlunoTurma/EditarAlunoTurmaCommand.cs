@@ -7,12 +7,11 @@ namespace ColegioMirim.Application.Commands.EditarAlunoTurma
 {
     public class EditarAlunoTurmaCommand : IRequest<CommandResponse<AlunoTurmaDTO>>
     {
+        [JsonIgnore]
+        public int Id { get; set; }
+
         public bool Ativo { get; set; }
-
-        [JsonIgnore]
         public int AlunoId { get; set; }
-
-        [JsonIgnore]
         public int TurmaId { get; set; }
     }
 }

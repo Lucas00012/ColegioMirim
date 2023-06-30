@@ -1,5 +1,7 @@
 ﻿using ColegioMirim.Application.DTO;
+using ColegioMirim.Domain.Alunos;
 using ColegioMirim.Domain.AlunosTurma;
+using ColegioMirim.Domain.Turmas;
 using ColegioMirim.Infrastructure.Data;
 using ColegioMirim.WebAPI.Core.Paginator;
 using Dapper;
@@ -20,12 +22,14 @@ namespace ColegioMirim.Application.Queries.ListarAlunosTurma
         {
             var orderByOptions = new List<OrderByOption>
             {
-                new(nameof(AlunoTurmaDTO.VinculadoEm), "at", nameof(AlunoTurma.CreatedAt)),
+                new(nameof(AlunoTurmaDTO.Id), "at"),
                 new(nameof(AlunoTurmaDTO.AlunoId), "at"),
                 new(nameof(AlunoTurmaDTO.TurmaId), "at"),
                 new(nameof(AlunoTurmaDTO.Ativo), "at"),
-                new(nameof(AlunoTurmaDTO.AlunoNome), "a"),
-                new(nameof(AlunoTurmaDTO.TurmaNome), "t"),
+                new(nameof(AlunoTurmaDTO.AlunoNome), "a", nameof(Aluno.Nome)),
+                new(nameof(AlunoTurmaDTO.AlunoRA), "a", nameof(Aluno.RA)),
+                new(nameof(AlunoTurmaDTO.TurmaNome), "t", nameof(Turma.Nome)),
+                new(nameof(AlunoTurmaDTO.TurmaAno), "t", nameof(Turma.Ano)),
             };
 
             var orderBy = orderByOptions
@@ -45,11 +49,14 @@ namespace ColegioMirim.Application.Queries.ListarAlunosTurma
 
             var alunos = await _context.Connection.QueryAsync<AlunoTurmaDTO>($@"
                 SELECT
+                    at.Id,
                     at.AlunoId,
                     at.TurmaId,
                     at.Ativo,
                     a.Nome AS AlunoNome,
+                    a.RA AS AlunoRA,
                     t.Nome AS TurmaNome,
+                    t.Ano AS TurmaAno,
                     at.CreatedAt AS VinculadoEm
                 FROM AlunoTurma AS at
                 INNER JOIN Aluno AS a ON a.Id = at.AlunoId

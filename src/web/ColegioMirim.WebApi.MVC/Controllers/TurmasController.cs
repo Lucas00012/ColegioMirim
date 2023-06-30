@@ -36,7 +36,6 @@ namespace ColegioMirim.WebApi.MVC.Controllers
                 Nome = turma.Nome
             };
 
-            ViewBag.TurmaId = turma.Id;
             return View(model);
         }
 

@@ -36,11 +36,11 @@ namespace ColegioMirim.WebApi.MVC.Services.Api
             return response.Data;
         }
 
-        public async Task<ObterAlunoTurmaViewModel> ObterAlunoTurma(int alunoId, int turmaId)
+        public async Task<ObterAlunoTurmaViewModel> ObterAlunoTurma(int id)
         {
             var client = CreateDefaultClient(_baseUrlsConfiguration.ApiColegioMirimUrl);
 
-            var request = new RestRequest($"/api/alunos-turma/{alunoId}/{turmaId}", Method.Get);
+            var request = new RestRequest($"/api/alunos-turma/{id}", Method.Get);
             AddBearerToken(request);
 
             var response = await client.ExecuteAsync<ObterAlunoTurmaViewModel>(request);
@@ -49,11 +49,11 @@ namespace ColegioMirim.WebApi.MVC.Services.Api
             return response.Data;
         }
 
-        public async Task<ObterAlunoTurmaViewModel> EditarAlunoTurma(int alunoId, int turmaId, EditarAlunoTurmaViewModel alunoTurmaViewModel)
+        public async Task<ObterAlunoTurmaViewModel> EditarAlunoTurma(int id, EditarAlunoTurmaViewModel alunoTurmaViewModel)
         {
             var client = CreateDefaultClient(_baseUrlsConfiguration.ApiColegioMirimUrl);
 
-            var request = new RestRequest($"/api/alunos-turma/{alunoId}/{turmaId}", Method.Put);
+            var request = new RestRequest($"/api/alunos-turma/{id}", Method.Put);
             request.AddBody(alunoTurmaViewModel);
             AddBearerToken(request);
 
@@ -77,11 +77,11 @@ namespace ColegioMirim.WebApi.MVC.Services.Api
             return response.Data;
         }
 
-        public async Task<ResponseResult> RemoverAlunoTurma(int alunoId, int turmaId)
+        public async Task<ResponseResult> RemoverAlunoTurma(int id)
         {
             var client = CreateDefaultClient(_baseUrlsConfiguration.ApiColegioMirimUrl);
 
-            var request = new RestRequest($"/api/alunos-turma/{alunoId}/{turmaId}", Method.Delete);
+            var request = new RestRequest($"/api/alunos-turma/{id}", Method.Delete);
             AddBearerToken(request);
 
             var response = await client.ExecuteAsync<ResponseResult>(request);

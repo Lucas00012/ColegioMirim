@@ -40,6 +40,8 @@
 </section>
 
 @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
     <script>
         $("#txtAluno").autocomplete({
             source: function (request, response) {
@@ -70,10 +72,6 @@
                 event.preventDefault();
                 $("#txtAluno").val(i.item.label);
                 $("#AlunoId").val(i.item.value);
-            },
-            focus: function (event, i) {
-                event.preventDefault();
-                $('#txtAluno').val(i.item.label);
             }
         });
 
@@ -106,10 +104,6 @@
                 event.preventDefault();
                 $("#txtTurma").val(i.item.label);
                 $("#TurmaId").val(i.item.value);
-            },
-            focus: function (event, i) {
-                event.preventDefault();
-                $('#txtTurma').val(i.item.label);
             }
         });
     </script>

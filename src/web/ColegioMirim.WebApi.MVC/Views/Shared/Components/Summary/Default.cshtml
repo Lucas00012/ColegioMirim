@@ -7,3 +7,21 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" style="margin-top: 18px" aria-label="Close"></button>
     </div>
 }
+@{
+    if (TempData["Erros"] is IEnumerable<string> mensagensErro && mensagensErro.Any())
+    {
+        <div style="padding-top: 15px;"></div>
+
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div style="padding-top: 20px" class="text-danger validation-summary-errors">
+                <ul>
+                    @foreach (var erro in mensagensErro)
+                    {
+                        <li>@erro</li>
+                    }
+                </ul>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" style="margin-top: 18px" aria-label="Close"></button>
+        </div>
+    }
+}

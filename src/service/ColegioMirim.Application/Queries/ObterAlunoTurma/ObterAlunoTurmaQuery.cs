@@ -5,7 +5,6 @@ namespace ColegioMirim.Application.Queries.ObterAlunoTurma
 {
     public class ObterAlunoTurmaQuery : IRequest<AlunoTurmaDTO>
     {
-        public int AlunoId { get; set; }
-        public int TurmaId { get; set; }
+        public int Id { get; set; }
     }
 }

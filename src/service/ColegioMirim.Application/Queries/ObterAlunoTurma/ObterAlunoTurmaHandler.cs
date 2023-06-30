@@ -18,17 +18,20 @@ namespace ColegioMirim.Application.Queries.ObterAlunoTurma
         {
             var dto = await _context.Connection.QuerySingleAsync<AlunoTurmaDTO>(@"
                 SELECT 
+                    at.Id,
                     at.Ativo,
                     at.AlunoId,
                     at.TurmaId,
+                    a.RA AS AlunoRA,
                     a.Nome AS AlunoNome,
                     t.Nome AS TurmaNome,
+                    t.Ano AS TurmaAno,
                     at.CreatedAt AS VinculadoEm
                 FROM AlunoTurma AS at
                 INNER JOIN Aluno AS a ON a.Id = at.AlunoId
                 INNER JOIN Turma AS t ON t.Id = at.TurmaId
-                WHERE at.AlunoId = @AlunoId AND at.TurmaId = @TurmaId
-            ", new { request.AlunoId, request.TurmaId });
+                WHERE at.Id = @Id
+            ", new { request.Id });
 
             return dto;
         }
