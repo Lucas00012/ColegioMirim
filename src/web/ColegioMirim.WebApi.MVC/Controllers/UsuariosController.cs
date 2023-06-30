@@ -17,6 +17,8 @@ namespace ColegioMirim.WebApi.MVC.Controllers
         }
 
         [HttpGet]
+        [Route("")]
+        [Route("login")]
         public IActionResult Login(string returnUrl)
         {
             if (_userSession.IsAuthenticated)
@@ -27,6 +29,8 @@ namespace ColegioMirim.WebApi.MVC.Controllers
         }
 
         [HttpPost]
+        [Route("")]
+        [Route("login")]
         public async Task<IActionResult> Login(UsuarioLoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)

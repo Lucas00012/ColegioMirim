@@ -27,6 +27,7 @@ namespace ColegioMirim.Application.Queries.ObterAlunoTurma
                 FROM AlunoTurma AS at
                 INNER JOIN Aluno AS a ON a.Id = at.AlunoId
                 INNER JOIN Turma AS t ON t.Id = at.TurmaId
+                WHERE at.AlunoId = @AlunoId AND at.TurmaId = @TurmaId
             ", new { request.AlunoId, request.TurmaId });
 
             return dto;

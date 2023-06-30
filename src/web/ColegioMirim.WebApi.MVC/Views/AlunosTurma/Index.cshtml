@@ -10,7 +10,8 @@
             Quantidade
             <input class="form-control" type="number" name="pageSize" value="@Context.FromQuery("pageSize")" aria-label="Search">
         </div>
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Pesquisar</button>
+        <a class="btn btn-outline-secondary" asp-action="Registrar" asp-controller="AlunosTurma">Cadastrar</a>
     </form>
 
     <table class="table mt-5">
@@ -20,6 +21,7 @@
                 <th scope="col">Turma</th>
                 <th scope="col">Ativo</th>
                 <th scope="col">Vinculado em</th>
+                <th scope="col">Opções</th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +32,9 @@
                     <td>@alunoTurma.TurmaNome</td>
                     <td>@(alunoTurma.Ativo ? "Sim" : "Não")</td>
                     <td>@alunoTurma.VinculadoEm.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <a class="btn btn-warning" asp-action="Editar" asp-controller="AlunosTurma" asp-route-alunoId="@alunoTurma.AlunoId" asp-route-turmaId="@alunoTurma.TurmaId">Editar</a>
+                    </td>
                 </tr>
             }
         </tbody>

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ColegioMirim.WebApi.MVC.Models
 {
-    public class RegistrarAlunoTurmaViewModel : ResponseResult
+    public class RegistrarAlunoTurmaViewModel
     {
         [DisplayName("Aluno")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]

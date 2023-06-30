@@ -1,0 +1,116 @@
+﻿@model RegistrarAlunoTurmaViewModel
+@inject IOptions<BaseUrlsConfiguration> baseUrlsConfiguration
+@inject UserSession userSession
+@{
+    ViewData["Title"] = "Alunos/Turma";
+    var baseUrls = baseUrlsConfiguration.Value;
+}
+
+<section class="section-conten padding-y container" style="min-height:45vh">
+    <vc:Summary></vc:Summary>
+
+    <a class="btn btn-outline-secondary" asp-action="Index" asp-controller="AlunosTurma">
+        Voltar
+    </a>
+
+    <div class="card mx-auto" style="max-width: 580px; margin-top: 100px;">
+
+        <div class="card-body">
+            <h4 class="card-title mb-4">Registrar vínculo</h4>
+            <form method="post" asp-route-id="@ViewBag.AlunoId">
+                <input asp-for="AlunoId" type="hidden" class="form-control" />
+                <input asp-for="TurmaId" type="hidden" class="form-control" />
+
+                <div class="form-group">
+                    <label>Aluno</label>
+                    <input class="form-control" id="txtAluno" />
+                </div>
+
+                <div class="form-group">
+                    <label>Turma</label>
+                    <input class="form-control" id="txtTurma" />
+                </div>
+
+                <div class="form-group mt-2">
+                    <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $("#txtAluno").autocomplete({
+            source: function (request, response) {
+                console.log(request, response);
+                $.ajax({
+                    url: '@baseUrls.ApiColegioMirimUrl/api/alunos?pageSize=10&pesquisa=' + request.term,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", "Bearer @userSession.ExtractClaimValue("JWT")");
+                    },
+                    type: "GET",
+                    success: function (data) {
+                        response($.map(data.items, function (item) {
+                            return { 
+                                label: "[RA]: " + item.ra + " [Nome]: " + item.nome,
+                                value: item.id
+                            };
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (event, i) {
+                event.preventDefault();
+                $("#txtAluno").val(i.item.label);
+                $("#AlunoId").val(i.item.value);
+            },
+            focus: function (event, i) {
+                event.preventDefault();
+                $('#txtAluno').val(i.item.label);
+            }
+        });
+
+        $("#txtTurma").autocomplete({
+            source: function (request, response) {
+                console.log(request, response);
+                $.ajax({
+                    url: '@baseUrls.ApiColegioMirimUrl/api/turmas?pageSize=10&pesquisa=' + request.term,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", "Bearer @userSession.ExtractClaimValue("JWT")");
+                    },
+                    type: "GET",
+                    success: function (data) {
+                        response($.map(data.items, function (item) {
+                            return {
+                                label: "[Ano]: " + item.ano + " [Nome]: " + item.nome,
+                                value: item.id
+                            };
+                        }))
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            },
+            select: function (event, i) {
+                event.preventDefault();
+                $("#txtTurma").val(i.item.label);
+                $("#TurmaId").val(i.item.value);
+            },
+            focus: function (event, i) {
+                event.preventDefault();
+                $('#txtTurma').val(i.item.label);
+            }
+        });
+    </script>
+}

@@ -1,6 +1,8 @@
-﻿namespace ColegioMirim.WebApi.MVC.Models.Response
+﻿using ColegioMirim.Core.Communication;
+
+namespace ColegioMirim.WebApi.MVC.Models.Response
 {
-    public class ObterAlunoTurmaViewModel
+    public class ObterAlunoTurmaViewModel : ResponseResult
     {
         public bool Ativo { get; set; }
 
