@@ -34,8 +34,12 @@
                         <td>@alunoTurma.TurmaNome</td>
                         <td>@(alunoTurma.Ativo ? "Sim" : "Não")</td>
                         <td>@alunoTurma.VinculadoEm.ToString("dd/MM/yyyy")</td>
-                        <td>
+                        <td class="d-flex gap-1">
                             <a class="btn btn-warning" asp-action="Editar" asp-controller="AlunosTurma" asp-route-id="@alunoTurma.Id">Editar</a>
+
+                            <form method="post" asp-controller="AlunosTurma" asp-action="Remover" asp-route-id="@alunoTurma.Id">
+                                <button type="submit" class="btn btn-danger">Remover</button>
+                            </form>
                         </td>
                     </tr>
                 }

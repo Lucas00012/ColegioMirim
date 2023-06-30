@@ -77,5 +77,12 @@ namespace ColegioMirim.WebApi.MVC.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Remover(int id)
+        {
+            await _alunosTurmaService.RemoverAlunoTurma(id);
+            return RedirectToAction("Index");
+        }
     }
 }

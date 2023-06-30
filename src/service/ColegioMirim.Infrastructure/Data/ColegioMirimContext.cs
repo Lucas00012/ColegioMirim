@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace ColegioMirim.Infrastructure.Data
 {
-    public class ColegioMirimContext
+    public class ColegioMirimContext : IDisposable
     {
         private readonly IConfiguration _configuration;
         public IDbConnection Connection { get; private set; }
@@ -21,6 +21,15 @@ namespace ColegioMirim.Infrastructure.Data
             connection.Open();
 
             return connection;
+        }
+
+        public void Dispose()
+        {
+            if (Connection is not null)
+            {
+                Connection.Close();
+                Connection.Dispose();
+            }
         }
     }
 }
