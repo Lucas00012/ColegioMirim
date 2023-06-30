@@ -1,9 +1,4 @@
 ﻿using ColegioMirim.Core.DomainObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ColegioMirim.Domain.Turmas.Rules
 {
@@ -20,7 +15,7 @@ namespace ColegioMirim.Domain.Turmas.Rules
 
         public bool IsValid()
         {
-            return _ano >= DateTime.Today.Year;
+            return _ano >= DateTime.Today.Year && _ano.ToString().Length == 4;
         }
     }
 }

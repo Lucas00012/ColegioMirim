@@ -1,0 +1,9 @@
+﻿@if (ViewData.ModelState.ErrorCount > 0)
+{
+    <div style="padding-top: 15px;"></div>
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div style="padding-top: 20px" asp-validation-summary="All" class="text-danger"></div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" style="margin-top: 18px" aria-label="Close"></button>
+    </div>
+}

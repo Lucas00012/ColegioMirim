@@ -1,0 +1,23 @@
+﻿@model IPaginacao
+
+<nav>
+    <ul class="pagination justify-content-end">
+        @{
+            for (var i = 1; i < Model.TotalPages + 1; i++)
+            {
+                if (i == Model.Page)
+                {
+                    <li class="page-item active">
+                        <a class="page-link" asp-action="@ViewContext.FromRoute("action")" asp-route-page="@i" asp-route-pageSize="@Model.PageSize" asp-route-pesquisa="@Context.FromQuery("pesquisa")">@i <span class="sr-only">(atual)</span></a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="@ViewContext.FromRoute("action")" asp-route-pageSize="@Model.PageSize" asp-route-page="@i" asp-route-pesquisa="@Context.FromQuery("pesquisa")">@i</a>
+                    </li>
+                }
+            }
+        }
+    </ul>
+</nav>

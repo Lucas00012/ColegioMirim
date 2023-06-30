@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace ColegioMirim.Domain.Alunos.Rules
 {
@@ -17,14 +16,14 @@ namespace ColegioMirim.Domain.Alunos.Rules
             _ra = ra;
         }
 
-        public static string ErrorMessage => "O RA é inválido";
+        public static string ErrorMessage => "O RA deve ser composto por 7 números";
 
         public bool IsValid()
         {
             if (string.IsNullOrEmpty(_ra))
                 return false;
 
-            var match = Regex.Match(_ra, @"\d{5}-\d{2}").Value;
+            var match = Regex.Match(_ra, @"\d{7}").Value;
             return _ra == match;
         }
     }

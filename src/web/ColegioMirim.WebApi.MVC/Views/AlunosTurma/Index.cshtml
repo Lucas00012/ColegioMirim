@@ -1,0 +1,39 @@
+﻿@model PaginacaoViewModel<ListarAlunosTurmaViewModel>
+@{
+    ViewData["Title"] = "Alunos/Turma";
+}
+
+<div class="container">
+    <form method="get" class="d-flex gap-3" asp-action="Index" asp-controller="Alunos">
+        <input class="form-control" name="pesquisa" value="@Context.FromQuery("pesquisa")" type="search" placeholder="Pesquisar vínculo" aria-label="Search">
+        <div class="d-flex align-items-center gap-1">
+            Quantidade
+            <input class="form-control" type="number" name="pageSize" value="@Context.FromQuery("pageSize")" aria-label="Search">
+        </div>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+    </form>
+
+    <table class="table mt-5">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Aluno</th>
+                <th scope="col">Turma</th>
+                <th scope="col">Ativo</th>
+                <th scope="col">Vinculado em</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var alunoTurma in Model.Items)
+            {
+                <tr>
+                    <td>@alunoTurma.AlunoNome</td>
+                    <td>@alunoTurma.TurmaNome</td>
+                    <td>@(alunoTurma.Ativo ? "Sim" : "Não")</td>
+                    <td>@alunoTurma.VinculadoEm.ToString("dd/MM/yyyy")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <vc:paginacao paginacao="@Model"></vc:paginacao>
+</div>

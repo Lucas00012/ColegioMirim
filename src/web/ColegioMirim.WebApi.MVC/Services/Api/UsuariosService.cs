@@ -65,5 +65,13 @@ namespace ColegioMirim.WebApi.MVC.Services.Api
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties);
         }
+
+        public async Task Logout()
+        {
+            await _authenticationService.SignOutAsync(
+                _httpContext,
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                null);
+        }
     }
 }

@@ -6,7 +6,8 @@ namespace ColegioMirim.WebApi.MVC.Configuration.Startup
     {
         public static void AddMvcConfiguration(this IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddRazorRuntimeCompilation();
         }
 
         public static void UseMvcConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
@@ -34,7 +35,7 @@ namespace ColegioMirim.WebApi.MVC.Configuration.Startup
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Usuarios}/{action=Login}/{id?}");
             });
         }
     }
