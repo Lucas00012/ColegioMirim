@@ -10,11 +10,12 @@ namespace ColegioMirim.Infrastructure.Data
         public void BeginTransaction()
         {
             if (!HasTransaction())
+            {
                 _transaction = new TransactionScope(
                     TransactionScopeOption.Required,
                     new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted },
-                    TransactionScopeAsyncFlowOption.Enabled
-                );
+                    TransactionScopeAsyncFlowOption.Enabled);
+            }
         }
 
         public void CommitTransaction()

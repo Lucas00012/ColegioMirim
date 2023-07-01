@@ -25,11 +25,8 @@ namespace ColegioMirim.Infrastructure.Data
 
         public void Dispose()
         {
-            if (Connection is not null)
-            {
-                Connection.Close();
-                Connection.Dispose();
-            }
+            Connection?.Close();
+            Connection?.Dispose();
         }
     }
 }
