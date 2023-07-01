@@ -1,17 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ColegioMirim.WebAPI.Core.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ColegioMirim.WebApi.MVC.Controllers
 {
     public class HomeController : MainController
     {
-        public IActionResult Index()
+        private readonly UserSession _userSession;
+
+        public HomeController(UserSession userSession)
         {
-            return View();
+            _userSession = userSession;
         }
 
-        public IActionResult Privacy()
+        public IActionResult Index()
         {
-            return View();
+            return RedirecionarPaginaPrincipal(_userSession);
+        }
+
+        [Route("/acesso-negado")]
+        public IActionResult Forbidden()
+        {
+            return RedirectToAction("Error", new { numero = 403 });
         }
 
         [Route("/Erro/{numero}")]

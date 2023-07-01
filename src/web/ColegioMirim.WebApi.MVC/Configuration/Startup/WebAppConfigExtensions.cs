@@ -35,7 +35,7 @@ namespace ColegioMirim.WebApi.MVC.Configuration.Startup
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Usuarios}/{action=Login}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

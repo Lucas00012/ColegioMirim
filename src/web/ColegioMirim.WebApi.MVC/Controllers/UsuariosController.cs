@@ -22,7 +22,7 @@ namespace ColegioMirim.WebApi.MVC.Controllers
         public IActionResult Login(string returnUrl)
         {
             if (_userSession.IsAuthenticated)
-                return RedirectToAction("Index", "Alunos");
+                return RedirecionarPaginaPrincipal(_userSession);
 
             ViewData["ReturnUrl"] = returnUrl;
             return View();
@@ -44,7 +44,7 @@ namespace ColegioMirim.WebApi.MVC.Controllers
             await _usuariosService.RealizarLogin(resposta);
 
             if (string.IsNullOrEmpty(returnUrl))
-                return RedirectToAction("Index", "Alunos");
+                return RedirecionarPaginaPrincipal(_userSession);
 
             return LocalRedirect(returnUrl);
         }

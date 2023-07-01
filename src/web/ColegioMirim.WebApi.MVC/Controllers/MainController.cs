@@ -1,4 +1,5 @@
 ﻿using ColegioMirim.Core.Communication;
+using ColegioMirim.WebAPI.Core.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -35,6 +36,20 @@ namespace ColegioMirim.WebApi.MVC.Controllers
         protected bool OperacaoValida()
         {
             return ModelState.ErrorCount == 0;
+        }
+
+        protected IActionResult RedirecionarPaginaPrincipal(UserSession userSession)
+        {
+            if (userSession.IsAuthenticated)
+            {
+                if (userSession.IsAdmin)
+                    return RedirectToAction("Index", "Alunos");
+
+                if (userSession.IsAluno)
+                    return RedirectToAction("Matricula", "Turmas");
+            }
+
+            return RedirectToAction("Login", "Usuarios");
         }
     }
 }

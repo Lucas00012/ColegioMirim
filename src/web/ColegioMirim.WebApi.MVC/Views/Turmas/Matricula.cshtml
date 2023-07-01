@@ -1,0 +1,40 @@
+﻿@model PaginacaoViewModel<ListarTurmasViewModel>
+@{
+    ViewData["Title"] = "Turmas";
+}
+
+<div class="container">
+    <form method="get" class="d-flex gap-3" asp-action="Matricula" asp-controller="Turmas">
+        <input class="form-control" name="pesquisa" value="@Context.FromQuery("pesquisa")" type="search" placeholder="Pesquisar turma" aria-label="Search">
+        <div class="d-flex align-items-center gap-1">
+            Quantidade
+            <input class="form-control" type="number" name="pageSize" value="@Context.FromQuery("pageSize")" aria-label="Search">
+        </div>
+        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Pesquisar</button>
+    </form>
+
+    @if (Model.Items.Any())
+    {
+        <div class="container row mt-5 justify-content-center">
+            @foreach (var turma in Model.Items)
+            {
+                <div class="col-4 text-center">
+                    <div class="card" style="height: 200px">
+                        <div class="card-body">
+                            <h5 class="card-title">@turma.Nome</h5>
+                            <h5 class="card-text mt-5">Ano: @turma.Ano</h5>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <vc:paginacao paginacao="@Model"></vc:paginacao>
+    }
+    else
+    {
+        <div class="alert alert-primary mt-5" role="alert">
+            Não foram encontradas turmas para exibir
+        </div>
+    }
+</div>

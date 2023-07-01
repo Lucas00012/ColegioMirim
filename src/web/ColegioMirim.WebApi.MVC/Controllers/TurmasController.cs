@@ -1,22 +1,25 @@
 ﻿using ColegioMirim.WebApi.MVC.Models;
 using ColegioMirim.WebApi.MVC.Services.Api;
+using ColegioMirim.WebAPI.Core.Identity;
 using ColegioMirim.WebAPI.Core.Paginator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ColegioMirim.WebApi.MVC.Controllers
 {
-    [Authorize]
     public class TurmasController : MainController
     {
         private readonly TurmasService _turmasService;
+        private readonly UserSession _userSession;
 
-        public TurmasController(TurmasService turmasService)
+        public TurmasController(TurmasService turmasService, UserSession userSession)
         {
             _turmasService = turmasService;
+            _userSession = userSession;
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Index(string pesquisa, string orderBy, OrderDirection? direction, int? page, int pageSize = 10)
         {
             var turmas = await _turmasService.ListarTurmas(pesquisa, orderBy, direction, page, pageSize);
@@ -24,7 +27,20 @@ namespace ColegioMirim.WebApi.MVC.Controllers
             return View(turmas);
         }
 
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Matricula(string pesquisa, string orderBy, OrderDirection? direction, int? page, int pageSize = 10)
+        {
+            if (_userSession.IsAdmin)
+                return RedirectToAction("Index");
+
+            var turmas = await _turmasService.ListarTurmas(pesquisa, orderBy, direction, page, pageSize);
+
+            return View(turmas);
+        }
+
         [HttpGet("/Turmas/Editar/{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Editar(int id)
         {
             var turma = await _turmasService.ObterTurma(id);
@@ -40,6 +56,7 @@ namespace ColegioMirim.WebApi.MVC.Controllers
         }
 
         [HttpPost("/Turmas/Editar/{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Editar(int id, EditarTurmaViewModel model)
         {
             if (!ModelState.IsValid)
@@ -54,12 +71,14 @@ namespace ColegioMirim.WebApi.MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public IActionResult Registrar()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Registrar(RegistrarTurmaViewModel model)
         {
             if (!ModelState.IsValid)

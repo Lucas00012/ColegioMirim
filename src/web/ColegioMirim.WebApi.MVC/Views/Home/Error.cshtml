@@ -5,10 +5,14 @@
 
 <div class="container row" style="margin:auto;">
 
-    <div class="col-8">
+    <div class="col-8 mt-5 text-center">
         <h1 style="font-size:100px;">Erro @Model</h1>
 
-        <p style="text-align:center">Oops! Não foi possível concluir a operação! tente novamente mais tarde</p>
+        <h5>Não foi possível acessar a página!</h5>
+
+        <a class="btn btn-secondary mt-5" asp-action="Index" asp-controller="Home">
+            Voltar para a página principal
+        </a>
     </div>
     <div class="col-4">
         <img src="~/img/erro-pagina.png" style="width:100%"/>

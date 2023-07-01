@@ -17,14 +17,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid justit">
-                @if (userSession.IsAuthenticated)
-                {
-                    <a class="navbar-brand" asp-controller="Alunos" asp-action="Index">Colégio Mirim</a>
-                }
-                else
-                {
-                    <a class="navbar-brand" asp-controller="Usuarios" asp-action="Login">Colégio Mirim</a>
-                }
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">Colégio Mirim</a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -35,15 +28,24 @@
                 {
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                         <ul class="navbar-nav flex-grow-1 mr-auto">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Alunos" asp-action="Index">Alunos</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Turmas" asp-action="Index">Turmas</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="AlunosTurma" asp-action="Index">Alunos/Turma</a>
-                            </li>
+                            @if (userSession.IsAdmin)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Alunos" asp-action="Index">Alunos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Turmas" asp-action="Index">Turmas</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="AlunosTurma" asp-action="Index">Alunos/Turma</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Turmas" asp-action="Matricula">Matrículas</a>
+                                </li>
+                            }
                         </ul>
 
                          <a class="nav-link text-dark" asp-controller="Usuarios" asp-action="Logout">Logout</a>

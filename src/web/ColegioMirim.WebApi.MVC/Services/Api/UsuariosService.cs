@@ -51,6 +51,13 @@ namespace ColegioMirim.WebApi.MVC.Services.Api
             var claims = jwt.Claims.ToList();
             claims.Add(new Claim("JWT", resposta.AccessToken));
 
+            var schemaRoles = claims
+                .Where(c => c.Type == "role")
+                .Select(c => new Claim(ClaimTypes.Role, c.Value))
+                .ToList();
+
+            claims.AddRange(schemaRoles);
+
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
             var authProperties = new AuthenticationProperties

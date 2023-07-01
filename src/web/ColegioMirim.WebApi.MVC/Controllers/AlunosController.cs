@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ColegioMirim.WebApi.MVC.Controllers
 {
-    [Authorize]
     public class AlunosController : MainController
     {
         private readonly AlunosService _alunosService;
@@ -17,6 +16,7 @@ namespace ColegioMirim.WebApi.MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Index(string pesquisa, string orderBy, OrderDirection? direction, int? page, int pageSize = 10)
         {
             var alunos = await _alunosService.ListarAlunos(pesquisa, orderBy, direction, page, pageSize);
@@ -25,6 +25,7 @@ namespace ColegioMirim.WebApi.MVC.Controllers
         }
 
         [HttpGet("/Alunos/Editar/{id}")]
+        [Authorize]
         public async Task<IActionResult> Editar(int id)
         {
             var aluno = await _alunosService.ObterAluno(id);
@@ -41,6 +42,7 @@ namespace ColegioMirim.WebApi.MVC.Controllers
         }
 
         [HttpPost("/Alunos/Editar/{id}")]
+        [Authorize]
         public async Task<IActionResult> Editar(int id, EditarAlunoViewModel model)
         {
             if (!ModelState.IsValid)
@@ -55,12 +57,14 @@ namespace ColegioMirim.WebApi.MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public IActionResult Registrar()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Registrar(RegistrarAlunoViewModel model)
         {
             if (!ModelState.IsValid)

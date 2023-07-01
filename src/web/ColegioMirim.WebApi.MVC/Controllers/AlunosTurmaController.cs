@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace ColegioMirim.WebApi.MVC.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public class AlunosTurmaController : MainController
     {
         private readonly AlunosTurmaService _alunosTurmaService;

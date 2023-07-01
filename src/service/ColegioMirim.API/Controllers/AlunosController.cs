@@ -52,7 +52,6 @@ namespace ColegioMirim.API.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize]
         public async Task<IActionResult> EditarAluno(int id, EditarAlunoCommand command)
         {
             command.Id = id;
@@ -62,7 +61,7 @@ namespace ColegioMirim.API.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> RegistrarAluno(RegistrarAlunoCommand command)
         {
             var result = await _mediator.Send(command);
