@@ -1,4 +1,5 @@
-﻿using ColegioMirim.Domain.Usuarios.Rules;
+﻿using ColegioMirim.Domain.Usuarios;
+using ColegioMirim.Domain.Usuarios.Rules;
 
 namespace ColegioMirim.Domain.Tests
 {
@@ -65,6 +66,28 @@ namespace ColegioMirim.Domain.Tests
 
             // Act & Assert
             Assert.True(rule.IsValid());
+        }
+
+        [Theory(DisplayName = "Gerar hash senha válida")]
+        [InlineData("@Aa123456")]
+        [InlineData("@Aa12345")]
+        [InlineData(" Aa12345")]
+        public void GerarSenhaHash_SenhaValida_DeveExecutarComSucesso(string senha)
+        {
+            // Arrange & Act
+            var hash = Usuario.GerarSenhaHash(senha);
+
+            // Assert
+            Assert.NotEmpty(hash);
+        }
+
+        [Theory(DisplayName = "Gerar hash senha inválida")]
+        [InlineData("")]
+        [InlineData(null)]
+        public void GerarSenhaHash_SenhaInvalida_DeveLancarErro(string senha)
+        {
+            // Arrange & Act & Assert
+            Assert.Throws<InvalidOperationException>(() => Usuario.GerarSenhaHash(senha));
         }
     }
 }

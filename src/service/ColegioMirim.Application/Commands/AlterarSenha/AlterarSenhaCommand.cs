@@ -16,7 +16,8 @@ namespace ColegioMirim.Application.Commands.AlterarSenha
             public Validator()
             {
                 RuleFor(c => c.SenhaAtual)
-                    .NotEmpty();
+                    .NotEmpty()
+                    .WithMessage("O campo Senha Atual é obrigatório");
 
                 RuleFor(c => c.NovaSenha)
                     .Must(c => new SenhaForteRule(c).IsValid())

@@ -15,20 +15,20 @@ namespace ColegioMirim.WebAPI.Core.Identity
             Name = ExtractClaimValue("name");
             Email = ExtractClaimValue("email");
             Roles = ExtractRoles();
-            IsAuthenticated = _httpContext.User.Identity.IsAuthenticated;
+            IsAuthenticated = _httpContext?.User.Identity.IsAuthenticated ?? false;
             Browser = _httpContext?.Request.Headers["User-Agent"];
             Ip = _httpContext?.Connection.RemoteIpAddress.ToString();
         }
 
-        public int? UsuarioId { get; private set; }
-        public string Name { get; private set; }
-        public string Email { get; private set; }
-        public string Ip { get; private set; }
-        public string Browser { get; private set; }
-        public bool IsAuthenticated { get; private set; }
+        public int? UsuarioId { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Ip { get; set; }
+        public string Browser { get; set; }
+        public bool IsAuthenticated { get; set; }
         public bool IsAdmin => Roles?.Contains("admin") ?? false;
         public bool IsAluno => Roles?.Contains("aluno") ?? false;
-        public List<string> Roles { get; private set; }
+        public List<string> Roles { get; set; }
 
         public string ExtractClaimValue(string type)
         {
