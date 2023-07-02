@@ -22,7 +22,7 @@ namespace ColegioMirim.API.Configuration.Startup
 
             services.AddAutoMapper(typeof(Entity), typeof(EditarAlunoHandler), typeof(Aluno));
 
-            services.AddScoped<UserSession>();
+            services.AddScoped<IUserSession, UserSession>();
 
             services.AddScoped<JwtTokenService>();
 

@@ -5,9 +5,9 @@ namespace ColegioMirim.WebApi.MVC.Controllers
 {
     public class HomeController : MainController
     {
-        private readonly UserSession _userSession;
+        private readonly IUserSession _userSession;
 
-        public HomeController(UserSession userSession)
+        public HomeController(IUserSession userSession)
         {
             _userSession = userSession;
         }

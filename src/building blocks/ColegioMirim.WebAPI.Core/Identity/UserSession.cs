@@ -2,7 +2,22 @@
 
 namespace ColegioMirim.WebAPI.Core.Identity
 {
-    public class UserSession
+    public interface IUserSession
+    {
+        int? UsuarioId { get; }
+        string Name { get; }
+        string Email { get; }
+        string Ip { get; }
+        string Browser { get; }
+        bool IsAuthenticated { get; }
+        bool IsAdmin { get; }
+        bool IsAluno { get; }
+        List<string> Roles { get; }
+
+        string ExtractClaimValue(string type);
+    }
+
+    public class UserSession : IUserSession
     {
         private readonly HttpContext _httpContext;
 
@@ -20,15 +35,15 @@ namespace ColegioMirim.WebAPI.Core.Identity
             Ip = _httpContext?.Connection.RemoteIpAddress.ToString();
         }
 
-        public int? UsuarioId { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Ip { get; set; }
-        public string Browser { get; set; }
-        public bool IsAuthenticated { get; set; }
+        public int? UsuarioId { get; private set; }
+        public string Name { get; private set; }
+        public string Email { get; private set; }
+        public string Ip { get; private set; }
+        public string Browser { get; private set; }
+        public bool IsAuthenticated { get; private set; }
         public bool IsAdmin => Roles?.Contains("admin") ?? false;
         public bool IsAluno => Roles?.Contains("aluno") ?? false;
-        public List<string> Roles { get; set; }
+        public List<string> Roles { get; private set; }
 
         public string ExtractClaimValue(string type)
         {

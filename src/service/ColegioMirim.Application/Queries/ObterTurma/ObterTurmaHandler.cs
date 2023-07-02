@@ -11,10 +11,10 @@ namespace ColegioMirim.Application.Queries.ObterTurma
 {
     public class ObterTurmaHandler : IRequestHandler<ObterTurmaQuery, TurmaDTO>
     {
-        private readonly UserSession _userSession;
+        private readonly IUserSession _userSession;
         private readonly ColegioMirimContext _context;
 
-        public ObterTurmaHandler(UserSession userSession, ColegioMirimContext context)
+        public ObterTurmaHandler(IUserSession userSession, ColegioMirimContext context)
         {
             _userSession = userSession;
             _context = context;

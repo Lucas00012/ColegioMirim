@@ -16,13 +16,11 @@ namespace ColegioMirim.Application.Commands.EditarAluno
     {
         private readonly IAlunoRepository _alunoRepository;
         private readonly IUsuarioRepository _usuarioRepository;
-        private readonly UserSession _userSession;
         private readonly IMediator _mediator;
 
-        public EditarAlunoHandler(IAlunoRepository alunoRepository, UserSession userSession, IUsuarioRepository usuarioRepository, IMediator mediator)
+        public EditarAlunoHandler(IAlunoRepository alunoRepository, IUsuarioRepository usuarioRepository, IMediator mediator)
         {
             _alunoRepository = alunoRepository;
-            _userSession = userSession;
             _usuarioRepository = usuarioRepository;
             _mediator = mediator;
         }

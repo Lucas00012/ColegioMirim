@@ -7,10 +7,10 @@ namespace ColegioMirim.API.Common.Filters
 {
     public class AlunoValidoFilter : IAsyncAuthorizationFilter
     {
-        private readonly UserSession _userSession;
+        private readonly IUserSession _userSession;
         private readonly IAlunoRepository _alunoRepository;
 
-        public AlunoValidoFilter(IAlunoRepository alunoRepository, UserSession userSession)
+        public AlunoValidoFilter(IAlunoRepository alunoRepository, IUserSession userSession)
         {
             _alunoRepository = alunoRepository;
             _userSession = userSession;

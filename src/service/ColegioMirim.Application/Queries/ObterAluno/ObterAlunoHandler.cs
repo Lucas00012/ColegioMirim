@@ -11,10 +11,10 @@ namespace ColegioMirim.Application.Queries.ObterAluno
 {
     public class ObterAlunoHandler : IRequestHandler<ObterAlunoQuery, AlunoDTO>
     {
-        private readonly UserSession _userSession;
+        private readonly IUserSession _userSession;
         private readonly ColegioMirimContext _context;
 
-        public ObterAlunoHandler(UserSession userSession, ColegioMirimContext context)
+        public ObterAlunoHandler(IUserSession userSession, ColegioMirimContext context)
         {
             _userSession = userSession;
             _context = context;

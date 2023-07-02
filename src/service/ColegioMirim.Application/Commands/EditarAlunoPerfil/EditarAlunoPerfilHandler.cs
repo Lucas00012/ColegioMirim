@@ -12,12 +12,12 @@ namespace ColegioMirim.Application.Commands.EditarAlunoPerfil
         CommandHandler,
         IRequestHandler<EditarAlunoPerfilCommand, CommandResponse<AlunoDTO>>
     {
-        private readonly UserSession _userSession;
+        private readonly IUserSession _userSession;
         private readonly IAlunoRepository _alunoRepository;
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IMediator _mediator;
 
-        public EditarAlunoPerfilHandler(IMediator mediator, UserSession userSession, IAlunoRepository alunoRepository, IUsuarioRepository usuarioRepository)
+        public EditarAlunoPerfilHandler(IMediator mediator, IUserSession userSession, IAlunoRepository alunoRepository, IUsuarioRepository usuarioRepository)
         {
             _mediator = mediator;
             _userSession = userSession;

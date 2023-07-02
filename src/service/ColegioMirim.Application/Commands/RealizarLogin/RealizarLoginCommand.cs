@@ -1,5 +1,6 @@
 ﻿using ColegioMirim.Application.Services.JwtToken.Models;
 using ColegioMirim.Core.Messages;
+using ColegioMirim.Domain.Usuarios.Rules;
 using FluentValidation;
 using MediatR;
 
@@ -15,10 +16,12 @@ namespace ColegioMirim.Application.Commands.RealizarLogin
             public Validator()
             {
                 RuleFor(c => c.Email)
-                    .EmailAddress();
+                    .Must(c => new EmailValidoRule(c).IsValid())
+                    .WithMessage(EmailValidoRule.ErrorMessage);
 
                 RuleFor(c => c.Senha)
-                    .NotEmpty();
+                    .NotEmpty()
+                    .WithMessage("O campo Senha é obrigatório");
             }
         }
 

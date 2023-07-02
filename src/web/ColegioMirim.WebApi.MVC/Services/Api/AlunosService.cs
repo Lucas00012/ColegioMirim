@@ -12,7 +12,7 @@ namespace ColegioMirim.WebApi.MVC.Services.Api
     {
         private readonly BaseUrlsConfiguration _baseUrlsConfiguration;
 
-        public AlunosService(IOptions<BaseUrlsConfiguration> baseUrlsConfiguration, UserSession userSession) : base(userSession)
+        public AlunosService(IOptions<BaseUrlsConfiguration> baseUrlsConfiguration, IUserSession userSession) : base(userSession)
         {
             _baseUrlsConfiguration = baseUrlsConfiguration.Value;
         }

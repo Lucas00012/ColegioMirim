@@ -23,8 +23,8 @@ namespace ColegioMirim.WebApi.MVC.Services.Api
             IOptions<BaseUrlsConfiguration> baseUrlsConfiguration, 
             IAuthenticationService authenticationService, 
             IHttpContextAccessor httpContextAccessor, 
-            IOptions<IdentityConfiguration> identityConfiguration, 
-            UserSession userSession) : base(userSession)
+            IOptions<IdentityConfiguration> identityConfiguration,
+            IUserSession userSession) : base(userSession)
         {
             _baseUrlsConfiguration = baseUrlsConfiguration.Value;
             _authenticationService = authenticationService;

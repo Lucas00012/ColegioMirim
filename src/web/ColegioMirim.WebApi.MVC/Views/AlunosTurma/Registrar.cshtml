@@ -1,6 +1,6 @@
 ﻿@model RegistrarAlunoTurmaViewModel
 @inject IOptions<BaseUrlsConfiguration> baseUrlsConfiguration
-@inject UserSession userSession
+@inject IUserSession userSession
 @{
     ViewData["Title"] = "Alunos/Turma";
     var baseUrls = baseUrlsConfiguration.Value;

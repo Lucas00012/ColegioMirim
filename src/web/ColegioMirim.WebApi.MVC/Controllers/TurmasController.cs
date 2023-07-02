@@ -10,9 +10,9 @@ namespace ColegioMirim.WebApi.MVC.Controllers
     public class TurmasController : MainController
     {
         private readonly TurmasService _turmasService;
-        private readonly UserSession _userSession;
+        private readonly IUserSession _userSession;
 
-        public TurmasController(TurmasService turmasService, UserSession userSession)
+        public TurmasController(TurmasService turmasService, IUserSession userSession)
         {
             _turmasService = turmasService;
             _userSession = userSession;

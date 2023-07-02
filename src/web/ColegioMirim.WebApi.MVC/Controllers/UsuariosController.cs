@@ -9,9 +9,9 @@ namespace ColegioMirim.WebApi.MVC.Controllers
     public class UsuariosController : MainController
     {
         private readonly UsuariosService _usuariosService;
-        private readonly UserSession _userSession;
+        private readonly IUserSession _userSession;
 
-        public UsuariosController(UsuariosService usuariosService, UserSession userSession)
+        public UsuariosController(UsuariosService usuariosService, IUserSession userSession)
         {
             _usuariosService = usuariosService;
             _userSession = userSession;

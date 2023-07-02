@@ -11,9 +11,9 @@ namespace ColegioMirim.Application.Queries.ListarAlunos
     public class ListarAlunosHandler : IRequestHandler<ListarAlunosQuery, QueryResponse<AlunoDTO>>
     {
         private readonly ColegioMirimContext _context;
-        private readonly UserSession _userSession;
+        private readonly IUserSession _userSession;
 
-        public ListarAlunosHandler(ColegioMirimContext context, UserSession userSession)
+        public ListarAlunosHandler(ColegioMirimContext context, IUserSession userSession)
         {
             _context = context;
             _userSession = userSession;

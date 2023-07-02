@@ -10,9 +10,9 @@ namespace ColegioMirim.WebApi.MVC.Services.Api
 {
     public abstract class Service
     {
-        private readonly UserSession _userSession;
+        private readonly IUserSession _userSession;
 
-        protected Service(UserSession userSession)
+        protected Service(IUserSession userSession)
         {
             _userSession = userSession;
         }

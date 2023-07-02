@@ -38,7 +38,7 @@ namespace ColegioMirim.WebApi.MVC.Controllers
             return ModelState.ErrorCount == 0;
         }
 
-        protected IActionResult RedirecionarPaginaPrincipal(UserSession userSession)
+        protected IActionResult RedirecionarPaginaPrincipal(IUserSession userSession)
         {
             if (userSession.IsAuthenticated)
             {

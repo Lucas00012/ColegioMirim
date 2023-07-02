@@ -8,11 +8,11 @@ namespace ColegioMirim.Application.Queries.ObterAlunoPerfil
 {
     public class ObterAlunoPerfilHandler : IRequestHandler<ObterAlunoPerfilQuery, AlunoDTO>
     {
-        private readonly UserSession _userSession;
+        private readonly IUserSession _userSession;
         private readonly IAlunoRepository _alunoRepository;
         private readonly IMediator _mediator;
 
-        public ObterAlunoPerfilHandler(UserSession userSession, IMediator mediator, IAlunoRepository alunoRepository)
+        public ObterAlunoPerfilHandler(IUserSession userSession, IMediator mediator, IAlunoRepository alunoRepository)
         {
             _userSession = userSession;
             _mediator = mediator;

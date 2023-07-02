@@ -12,9 +12,9 @@ namespace ColegioMirim.Application.Queries.ListarTurmas
     public class ListarTurmasHandler : IRequestHandler<ListarTurmasQuery, QueryResponse<TurmaDTO>>
     {
         private readonly ColegioMirimContext _context;
-        private readonly UserSession _userSession;
+        private readonly IUserSession _userSession;
 
-        public ListarTurmasHandler(ColegioMirimContext context, UserSession userSession)
+        public ListarTurmasHandler(ColegioMirimContext context, IUserSession userSession)
         {
             _context = context;
             _userSession = userSession;

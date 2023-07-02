@@ -10,7 +10,7 @@ namespace ColegioMirim.WebApi.MVC.Configuration.Startup
         {
             services.AddHttpContextAccessor();
 
-            services.AddScoped<UserSession>();
+            services.AddScoped<IUserSession, UserSession>();
 
             services.AddScoped<AlunosService>();
             services.AddScoped<TurmasService>();

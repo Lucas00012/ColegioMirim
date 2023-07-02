@@ -10,9 +10,9 @@ namespace ColegioMirim.Application.Commands.AlterarSenha
         IRequestHandler<AlterarSenhaCommand, CommandResponse>
     {
         private readonly IUsuarioRepository _usuarioRepository;
-        private readonly UserSession _userSession;
+        private readonly IUserSession _userSession;
 
-        public AlterarSenhaHandler(IUsuarioRepository usuarioRepository, UserSession userSession)
+        public AlterarSenhaHandler(IUsuarioRepository usuarioRepository, IUserSession userSession)
         {
             _usuarioRepository = usuarioRepository;
             _userSession = userSession;
