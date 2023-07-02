@@ -16,8 +16,10 @@ namespace ColegioMirim.Domain.Tests
         [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
         public void NomeAlunoValidoRule_NomeAlunoInvalido_DeveEstarInvalido(string nomeAluno)
         {
+            // Arrange
             var rule = new NomeAlunoValidoRule(nomeAluno);
 
+            // Act & Assert
             Assert.False(rule.IsValid());
         }
 
@@ -27,8 +29,10 @@ namespace ColegioMirim.Domain.Tests
         [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
         public void NomeAlunoValidoRule_NomeAlunoValido_DeveEstarValido(string nomeAluno)
         {
+            // Arrange
             var rule = new NomeAlunoValidoRule(nomeAluno);
 
+            // Act & Assert
             Assert.True(rule.IsValid());
         }
 
@@ -43,8 +47,10 @@ namespace ColegioMirim.Domain.Tests
         [InlineData("aaaaaaa")]
         public void RAValidoRule_RAInvalido_DeveEstarInvalido(string ra)
         {
+            // Arrange
             var rule = new RAValidoRule(ra);
 
+            // Act & Assert
             Assert.False(rule.IsValid());
         }
 
@@ -53,8 +59,10 @@ namespace ColegioMirim.Domain.Tests
         [InlineData("1234567")]
         public void RAValidoRule_RAValido_DeveEstarValido(string ra)
         {
+            // Arrange
             var rule = new RAValidoRule(ra);
 
+            // Act & Assert
             Assert.True(rule.IsValid());
         }
     }

@@ -13,8 +13,10 @@ namespace ColegioMirim.Domain.Tests
         [InlineData("joao@    gmail.com")]
         public void EmailValidoRule_EmailInvalido_DeveEstarInvalido(string email)
         {
+            // Arrange
             var rule = new EmailValidoRule(email);
 
+            // Act & Assert
             Assert.False(rule.IsValid());
         }
 
@@ -25,8 +27,10 @@ namespace ColegioMirim.Domain.Tests
         [InlineData("43456674@gmail.com")]
         public void EmailValidoRule_EmailValido_DeveEstarValido(string email)
         {
+            // Arrange
             var rule = new EmailValidoRule(email);
 
+            // Act & Assert
             Assert.True(rule.IsValid());
         }
 
@@ -43,8 +47,10 @@ namespace ColegioMirim.Domain.Tests
         [InlineData("@@@@@@@@@@")]
         public void SenhaForteRule_SenhaInvalida_DeveEstarInvalida(string senha)
         {
+            // Arrange
             var rule = new SenhaForteRule(senha);
 
+            // Act & Assert
             Assert.False(rule.IsValid());
         }
 
@@ -54,8 +60,10 @@ namespace ColegioMirim.Domain.Tests
         [InlineData(" Aa12345")]
         public void SenhaForteRule_SenhaValida_DeveEstarValida(string senha)
         {
+            // Arrange
             var rule = new SenhaForteRule(senha);
 
+            // Act & Assert
             Assert.True(rule.IsValid());
         }
     }
