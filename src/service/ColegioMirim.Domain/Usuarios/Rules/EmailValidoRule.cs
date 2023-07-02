@@ -1,4 +1,5 @@
 ﻿using ColegioMirim.Core.DomainObjects;
+using ColegioMirim.Core.Extensions;
 using System.ComponentModel.DataAnnotations;
 
 namespace ColegioMirim.Domain.Usuarios.Rules
@@ -16,6 +17,15 @@ namespace ColegioMirim.Domain.Usuarios.Rules
 
         public bool IsValid()
         {
+            if (string.IsNullOrEmpty(_email))
+                return false;
+
+            if (_email.Trim() != _email)
+                return false;
+
+            if (_email.TrimMiddle() != _email)
+                return false;
+
             var validator = new EmailAddressAttribute();
             return validator.IsValid(_email);
         }

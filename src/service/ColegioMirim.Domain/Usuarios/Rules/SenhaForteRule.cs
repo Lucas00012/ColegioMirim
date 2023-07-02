@@ -1,4 +1,5 @@
 ﻿using ColegioMirim.Core.DomainObjects;
+using ColegioMirim.Core.Extensions;
 
 namespace ColegioMirim.Domain.Usuarios.Rules
 {
@@ -27,7 +28,7 @@ namespace ColegioMirim.Domain.Usuarios.Rules
             if (!_senha.Any(char.IsNumber))
                 return false;
 
-            if (!_senha.Any(c => "!@#$%&*()_+-={}/?[]~^´`\"'|<>.;:".Contains(c)))
+            if (!_senha.ApenasCaracteresEspeciais().Any())
                 return false;
 
             return true;

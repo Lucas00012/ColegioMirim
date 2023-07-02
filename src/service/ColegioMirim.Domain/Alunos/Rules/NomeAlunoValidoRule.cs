@@ -1,4 +1,5 @@
 ﻿using ColegioMirim.Core.DomainObjects;
+using ColegioMirim.Core.Extensions;
 
 namespace ColegioMirim.Domain.Alunos.Rules
 {
@@ -15,6 +16,18 @@ namespace ColegioMirim.Domain.Alunos.Rules
 
         public bool IsValid()
         {
+            if (string.IsNullOrEmpty(_nome))
+                return false;
+
+            if (_nome.Trim() != _nome)
+                return false;
+
+            if (_nome.ApenasNumeros().Any())
+                return false;
+
+            if (_nome.TrimMiddle() != _nome)
+                return false;
+
             if (string.IsNullOrEmpty(_nome))
                 return false;
 

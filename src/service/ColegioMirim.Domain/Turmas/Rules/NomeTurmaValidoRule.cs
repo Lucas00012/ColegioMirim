@@ -1,4 +1,5 @@
 ﻿using ColegioMirim.Core.DomainObjects;
+using ColegioMirim.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,12 @@ namespace ColegioMirim.Domain.Turmas.Rules
         public bool IsValid()
         {
             if (string.IsNullOrEmpty(_nome))
+                return false;
+
+            if (_nome.Trim() != _nome)
+                return false;
+
+            if (_nome.TrimMiddle() != _nome)
                 return false;
 
             return _nome.Length >= 3 && _nome.Length <= 60;

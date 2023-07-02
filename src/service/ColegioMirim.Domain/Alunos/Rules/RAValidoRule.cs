@@ -1,4 +1,5 @@
 ﻿using ColegioMirim.Core.DomainObjects;
+using ColegioMirim.Core.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +24,13 @@ namespace ColegioMirim.Domain.Alunos.Rules
             if (string.IsNullOrEmpty(_ra))
                 return false;
 
-            var match = Regex.Match(_ra, @"\d{7}").Value;
-            return _ra == match;
+            if (_ra.ApenasNumeros() != _ra)
+                return false;
+
+            if (_ra.Length != 7)
+                return false;
+
+            return true;
         }
     }
 }
