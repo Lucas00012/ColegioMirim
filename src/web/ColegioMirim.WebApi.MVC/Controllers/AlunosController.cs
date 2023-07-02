@@ -1,5 +1,6 @@
 ﻿using ColegioMirim.WebApi.MVC.Models;
 using ColegioMirim.WebApi.MVC.Services.Api;
+using ColegioMirim.WebAPI.Core.Identity;
 using ColegioMirim.WebAPI.Core.Paginator;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,12 @@ namespace ColegioMirim.WebApi.MVC.Controllers
     public class AlunosController : MainController
     {
         private readonly AlunosService _alunosService;
+        private readonly UserSession _userSession;
 
-        public AlunosController(AlunosService alunosService)
+        public AlunosController(AlunosService alunosService, UserSession userSession)
         {
             _alunosService = alunosService;
+            _userSession = userSession;
         }
 
         [HttpGet]
@@ -24,8 +27,38 @@ namespace ColegioMirim.WebApi.MVC.Controllers
             return View(alunos);
         }
 
+        [HttpGet]
+        [Authorize(Roles = "aluno")]
+        public async Task<IActionResult> Perfil()
+        {
+            var aluno = await _alunosService.ObterPerfil();
+
+            var model = new EditarAlunoPerfilViewModel
+            {
+                Email = aluno.Email,
+                Nome = aluno.Nome
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "aluno")]
+        public async Task<IActionResult> Perfil(EditarAlunoPerfilViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var resposta = await _alunosService.EditarPerfil(model);
+
+            if (PossuiErros(resposta))
+                return View(model);
+
+            return RedirecionarPaginaPrincipal(_userSession);
+        }
+
         [HttpGet("/Alunos/Editar/{id}")]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Editar(int id)
         {
             var aluno = await _alunosService.ObterAluno(id);
@@ -42,7 +75,7 @@ namespace ColegioMirim.WebApi.MVC.Controllers
         }
 
         [HttpPost("/Alunos/Editar/{id}")]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Editar(int id, EditarAlunoViewModel model)
         {
             if (!ModelState.IsValid)

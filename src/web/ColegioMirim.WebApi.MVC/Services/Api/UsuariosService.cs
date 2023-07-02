@@ -1,4 +1,5 @@
-﻿using ColegioMirim.WebApi.MVC.Configuration.Settings;
+﻿using ColegioMirim.Core.Communication;
+using ColegioMirim.WebApi.MVC.Configuration.Settings;
 using ColegioMirim.WebApi.MVC.Models;
 using ColegioMirim.WebApi.MVC.Models.Response;
 using ColegioMirim.WebAPI.Core.Identity;
@@ -31,14 +32,28 @@ namespace ColegioMirim.WebApi.MVC.Services.Api
             _identityConfiguration = identityConfiguration.Value;
         }
 
-        public async Task<UsuarioRespostaLoginViewModel> Login(UsuarioLoginViewModel usuarioLogin)
+        public async Task<UsuarioRespostaLoginViewModel> Login(UsuarioLoginViewModel model)
         {
             var client = CreateDefaultClient(_baseUrlsConfiguration.ApiColegioMirimUrl);
 
             var request = new RestRequest("/api/usuarios/login", Method.Post);
-            request.AddBody(usuarioLogin);
+            request.AddBody(model);
 
             var response = await client.ExecuteAsync<UsuarioRespostaLoginViewModel>(request);
+            AssertResponse(response);
+
+            return response.Data;
+        }
+
+        public async Task<ResponseResult> AlterarSenha(AlterarSenhaViewModel model)
+        {
+            var client = CreateDefaultClient(_baseUrlsConfiguration.ApiColegioMirimUrl);
+
+            var request = new RestRequest("/api/usuarios/alterar-senha", Method.Put);
+            request.AddBody(model);
+            AddBearerToken(request);
+
+            var response = await client.ExecuteAsync<ResponseResult>(request);
             AssertResponse(response);
 
             return response.Data;

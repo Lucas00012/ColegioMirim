@@ -1,6 +1,7 @@
 ﻿using ColegioMirim.WebApi.MVC.Models;
 using ColegioMirim.WebApi.MVC.Services.Api;
 using ColegioMirim.WebAPI.Core.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ColegioMirim.WebApi.MVC.Controllers
@@ -47,6 +48,28 @@ namespace ColegioMirim.WebApi.MVC.Controllers
                 return RedirecionarPaginaPrincipal(_userSession);
 
             return LocalRedirect(returnUrl);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult AlterarSenha()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> AlterarSenha(AlterarSenhaViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var resposta = await _usuariosService.AlterarSenha(model);
+
+            if (PossuiErros(resposta))
+                return View(model);
+
+            return RedirecionarPaginaPrincipal(_userSession);
         }
 
         [HttpGet]

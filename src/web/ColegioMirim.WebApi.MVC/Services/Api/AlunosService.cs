@@ -48,12 +48,11 @@ namespace ColegioMirim.WebApi.MVC.Services.Api
             return response.Data;
         }
 
-        public async Task<ObterAlunoViewModel> EditarAluno(int id, EditarAlunoViewModel alunoViewModel)
+        public async Task<ObterAlunoViewModel> ObterPerfil()
         {
             var client = CreateDefaultClient(_baseUrlsConfiguration.ApiColegioMirimUrl);
 
-            var request = new RestRequest($"/api/alunos/{id}", Method.Put);
-            request.AddBody(alunoViewModel);
+            var request = new RestRequest("/api/alunos/perfil", Method.Get);
             AddBearerToken(request);
 
             var response = await client.ExecuteAsync<ObterAlunoViewModel>(request);
@@ -62,12 +61,40 @@ namespace ColegioMirim.WebApi.MVC.Services.Api
             return response.Data;
         }
 
-        public async Task<ObterAlunoViewModel> RegistrarAluno(RegistrarAlunoViewModel alunoViewModel)
+        public async Task<ObterAlunoViewModel> EditarPerfil(EditarAlunoPerfilViewModel model)
+        {
+            var client = CreateDefaultClient(_baseUrlsConfiguration.ApiColegioMirimUrl);
+
+            var request = new RestRequest("/api/alunos/perfil", Method.Put);
+            request.AddBody(model);
+            AddBearerToken(request);
+
+            var response = await client.ExecuteAsync<ObterAlunoViewModel>(request);
+            AssertResponse(response);
+
+            return response.Data;
+        }
+
+        public async Task<ObterAlunoViewModel> EditarAluno(int id, EditarAlunoViewModel model)
+        {
+            var client = CreateDefaultClient(_baseUrlsConfiguration.ApiColegioMirimUrl);
+
+            var request = new RestRequest($"/api/alunos/{id}", Method.Put);
+            request.AddBody(model);
+            AddBearerToken(request);
+
+            var response = await client.ExecuteAsync<ObterAlunoViewModel>(request);
+            AssertResponse(response);
+
+            return response.Data;
+        }
+
+        public async Task<ObterAlunoViewModel> RegistrarAluno(RegistrarAlunoViewModel model)
         {
             var client = CreateDefaultClient(_baseUrlsConfiguration.ApiColegioMirimUrl);
 
             var request = new RestRequest("/api/alunos", Method.Post);
-            request.AddBody(alunoViewModel);
+            request.AddBody(model);
             AddBearerToken(request);
 
             var response = await client.ExecuteAsync<ObterAlunoViewModel>(request);

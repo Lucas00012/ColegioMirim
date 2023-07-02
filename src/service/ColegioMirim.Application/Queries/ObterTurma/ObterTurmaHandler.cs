@@ -37,7 +37,7 @@ namespace ColegioMirim.Application.Queries.ObterTurma
                     (
                         SELECT 1 FROM AlunoTurma AS at
                         INNER JOIN Aluno AS a ON a.Id = at.AlunoId
-                        WHERE at.TurmaId = t.Id AND a.UsuarioId = @UsuarioId AND at.Ativo = 1
+                        WHERE at.TurmaId = t.Id AND a.UsuarioId = @UsuarioId AND at.Ativo = 1 AND t.Ativo = 1
                     )
                 )
             ", new { request.Id, _userSession.IsAdmin, _userSession.UsuarioId });

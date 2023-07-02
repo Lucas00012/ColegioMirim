@@ -48,12 +48,12 @@ namespace ColegioMirim.WebApi.MVC.Services.Api
             return response.Data;
         }
 
-        public async Task<ObterTurmaViewModel> EditarTurma(int id, EditarTurmaViewModel turmaViewModel)
+        public async Task<ObterTurmaViewModel> EditarTurma(int id, EditarTurmaViewModel model)
         {
             var client = CreateDefaultClient(_baseUrlsConfiguration.ApiColegioMirimUrl);
 
             var request = new RestRequest($"/api/turmas/{id}", Method.Put);
-            request.AddBody(turmaViewModel);
+            request.AddBody(model);
             AddBearerToken(request);
 
             var response = await client.ExecuteAsync<ObterTurmaViewModel>(request);
@@ -62,12 +62,12 @@ namespace ColegioMirim.WebApi.MVC.Services.Api
             return response.Data;
         }
 
-        public async Task<ObterTurmaViewModel> RegistrarTurma(RegistrarTurmaViewModel turmaViewModel)
+        public async Task<ObterTurmaViewModel> RegistrarTurma(RegistrarTurmaViewModel model)
         {
             var client = CreateDefaultClient(_baseUrlsConfiguration.ApiColegioMirimUrl);
 
             var request = new RestRequest("/api/turmas", Method.Post);
-            request.AddBody(turmaViewModel);
+            request.AddBody(model);
             AddBearerToken(request);
 
             var response = await client.ExecuteAsync<ObterTurmaViewModel>(request);

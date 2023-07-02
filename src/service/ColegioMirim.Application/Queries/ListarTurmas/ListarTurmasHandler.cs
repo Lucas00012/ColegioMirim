@@ -1,4 +1,5 @@
 ﻿using ColegioMirim.Application.DTO;
+using ColegioMirim.Domain.Turmas;
 using ColegioMirim.Infrastructure.Data;
 using ColegioMirim.WebAPI.Core.Identity;
 using ColegioMirim.WebAPI.Core.Paginator;
@@ -27,6 +28,7 @@ namespace ColegioMirim.Application.Queries.ListarTurmas
                 new(nameof(TurmaDTO.Nome), "t"),
                 new(nameof(TurmaDTO.Ano), "t"),
                 new(nameof(TurmaDTO.Ativo), "t"),
+                new(nameof(TurmaDTO.CriadoEm), "t", nameof(Turma.CreatedAt)),
             };
 
             var orderBy = orderByOptions
@@ -80,7 +82,7 @@ namespace ColegioMirim.Application.Queries.ListarTurmas
                         (
                             SELECT 1 FROM AlunoTurma AS at 
                             INNER JOIN Aluno AS a ON a.Id = at.AlunoId
-                            WHERE at.TurmaId = t.Id AND a.UsuarioId = @UsuarioId AND at.Ativo = 1
+                            WHERE at.TurmaId = t.Id AND a.UsuarioId = @UsuarioId AND at.Ativo = 1 AND t.Ativo = 1
                         )
                     )
                 ORDER BY {orderBy.Alias}.{orderBy.Column} {request.Direction}

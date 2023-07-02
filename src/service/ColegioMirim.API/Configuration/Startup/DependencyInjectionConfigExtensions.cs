@@ -1,5 +1,5 @@
-﻿using ColegioMirim.API.Services.JwtToken;
-using ColegioMirim.Application.Commands.EditarAluno;
+﻿using ColegioMirim.Application.Commands.EditarAluno;
+using ColegioMirim.Application.Services.JwtToken;
 using ColegioMirim.Core.Data;
 using ColegioMirim.Core.DomainObjects;
 using ColegioMirim.Domain.Alunos;

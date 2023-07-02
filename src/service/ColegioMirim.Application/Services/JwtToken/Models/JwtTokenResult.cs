@@ -1,4 +1,4 @@
-﻿namespace ColegioMirim.API.Services.JwtToken.Models
+﻿namespace ColegioMirim.Application.Services.JwtToken.Models
 {
     public class JwtTokenResult
     {

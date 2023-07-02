@@ -49,12 +49,6 @@ namespace ColegioMirim.Application.Commands.EditarAluno
                 return Error<AlunoDTO>();
             }
 
-            if (!_userSession.IsAdmin && aluno.UsuarioId != _userSession.UsuarioId)
-            {
-                AdicionarErro("Você não tem permissão para editar");
-                return Error<AlunoDTO>(HttpStatusCode.Forbidden);
-            }
-
             var usuario = await _usuarioRepository.GetById(aluno.UsuarioId);
 
             var usuarioPorEmail = await _usuarioRepository.GetByEmail(request.Email);
@@ -67,9 +61,7 @@ namespace ColegioMirim.Application.Commands.EditarAluno
             aluno.Nome = request.Nome;
             aluno.RA = request.RA;
             usuario.Email = request.Email;
-
-            if (_userSession.IsAdmin)
-                aluno.Ativo = request.Ativo;
+            aluno.Ativo = request.Ativo;
 
             await _alunoRepository.Update(aluno);
             await _usuarioRepository.Update(usuario);

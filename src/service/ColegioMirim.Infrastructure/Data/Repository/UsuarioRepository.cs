@@ -63,7 +63,7 @@ namespace ColegioMirim.Infrastructure.Data.Repository
         {
             usuario.UpdatedAt = DateTimeOffset.Now;
 
-            var sql = "UPDATE Usuario SET Email = @Email, SenhaHash = @SenhaHash, TipoUsuario = @TipoUsuario, CreatedAt = @CreatedAt, UpdatedAt = @UpdatedAt WHERE Id = @Id";
+            var sql = $"UPDATE Usuario SET Email = @Email, SenhaHash = @SenhaHash, TipoUsuario = '{usuario.TipoUsuario}', CreatedAt = @CreatedAt, UpdatedAt = @UpdatedAt WHERE Id = @Id";
             var result = await _context.Connection.ExecuteAsync(sql, usuario);
 
             return result;

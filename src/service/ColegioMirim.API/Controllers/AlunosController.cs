@@ -1,7 +1,9 @@
 ﻿using ColegioMirim.Application.Commands.EditarAluno;
+using ColegioMirim.Application.Commands.EditarAlunoPerfil;
 using ColegioMirim.Application.Commands.RegistrarAluno;
 using ColegioMirim.Application.Queries.ListarAlunos;
 using ColegioMirim.Application.Queries.ObterAluno;
+using ColegioMirim.Application.Queries.ObterAlunoPerfil;
 using ColegioMirim.WebAPI.Core.Controllers;
 using ColegioMirim.WebAPI.Core.Paginator;
 using MediatR;
@@ -51,7 +53,28 @@ namespace ColegioMirim.API.Controllers
             return Ok(query);
         }
 
+        [HttpGet("perfil")]
+        [Authorize(Roles = "aluno")]
+        public async Task<IActionResult> ObterPerfil()
+        {
+            var query = await _mediator.Send(new ObterAlunoPerfilQuery());
+
+            if (query is null)
+                return NotFound();
+
+            return Ok(query);
+        }
+
+        [HttpPut("perfil")]
+        [Authorize(Roles = "aluno")]
+        public async Task<IActionResult> EditarPerfil(EditarAlunoPerfilCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return CustomResponse(result);
+        }
+
         [HttpPut("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> EditarAluno(int id, EditarAlunoCommand command)
         {
             command.Id = id;

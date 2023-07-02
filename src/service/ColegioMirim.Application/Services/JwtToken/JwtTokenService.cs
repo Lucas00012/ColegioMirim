@@ -1,4 +1,4 @@
-﻿using ColegioMirim.API.Services.JwtToken.Models;
+﻿using ColegioMirim.Application.Services.JwtToken.Models;
 using ColegioMirim.Domain.Alunos;
 using ColegioMirim.Domain.Usuarios;
 using ColegioMirim.WebAPI.Core.Identity;
@@ -7,34 +7,21 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace ColegioMirim.API.Services.JwtToken
+namespace ColegioMirim.Application.Services.JwtToken
 {
     public class JwtTokenService
     {
-        private readonly IUsuarioRepository _usuarioRepository;
         private readonly IAlunoRepository _alunoRepository;
         private readonly IdentityConfiguration _identityConfiguration;
 
-        public JwtTokenService(IUsuarioRepository usuarioRepository, IOptions<IdentityConfiguration> identityConfiguration, IAlunoRepository alunoRepository)
+        public JwtTokenService(IOptions<IdentityConfiguration> identityConfiguration, IAlunoRepository alunoRepository)
         {
-            _usuarioRepository = usuarioRepository;
             _identityConfiguration = identityConfiguration.Value;
             _alunoRepository = alunoRepository;
         }
 
-        public async Task<JwtTokenResult> GerarJwt(string email, string senha)
+        public async Task<JwtTokenResult> GerarJwt(Usuario usuario)
         {
-            var usuario = await _usuarioRepository.GetByEmail(email);
-            if (usuario is null)
-            {
-                return null;
-            }
-
-            if (usuario.SenhaHash != Usuario.GerarSenhaHash(senha))
-            {
-                return null;
-            }
-
             var tokenHandler = new JwtSecurityTokenHandler();
             var claims = await ObterClaims(usuario);
 

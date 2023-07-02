@@ -1,6 +1,9 @@
-﻿using ColegioMirim.API.Services.JwtToken;
-using ColegioMirim.API.Services.JwtToken.Models;
+﻿using ColegioMirim.Application.Commands.AlterarSenha;
+using ColegioMirim.Application.Commands.RealizarLogin;
+using ColegioMirim.Application.Services.JwtToken;
 using ColegioMirim.WebAPI.Core.Controllers;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ColegioMirim.API.Controllers
@@ -9,22 +12,26 @@ namespace ColegioMirim.API.Controllers
     [Route("api/usuarios")]
     public class UsuariosController : MainController
     {
-        private readonly JwtTokenService _jwtTokenService;
+        private readonly IMediator _mediator;
 
-        public UsuariosController(JwtTokenService jwtTokenService)
+        public UsuariosController(IMediator mediator)
         {
-            _jwtTokenService = jwtTokenService;
+            _mediator = mediator;
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(JwtTokenLogin jwtTokenLogin)
+        public async Task<IActionResult> Login(RealizarLoginCommand command)
         {
-            var token = await _jwtTokenService.GerarJwt(jwtTokenLogin.Email, jwtTokenLogin.Senha);
+            var result = await _mediator.Send(command);
+            return CustomResponse(result);
+        }
 
-            if (token is null)
-                return ErrorResponse("Credenciais incorretas");
-
-            return Ok(token);
+        [HttpPut("alterar-senha")]
+        [Authorize]
+        public async Task<IActionResult> AlterarSenha(AlterarSenhaCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return CustomResponse(result);
         }
     }
 }
