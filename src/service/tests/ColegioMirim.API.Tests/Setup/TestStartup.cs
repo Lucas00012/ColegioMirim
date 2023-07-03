@@ -1,22 +1,24 @@
 ﻿using ColegioMirim.API.Configuration.Startup;
 using ColegioMirim.WebAPI.Core.Identity;
 using FluentMigrator.Runner;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace ColegioMirim.API
+namespace ColegioMirim.API.Tests.Setup
 {
-    public class Startup
+    public class TestStartup
     {
         public IConfiguration Configuration { get; set; }
 
-        public Startup(IConfiguration configuration)
+        public TestStartup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.use
-
             services.AddApiConfiguration(Configuration);
 
             services.AddAuthConfiguration(Configuration);
@@ -29,8 +31,6 @@ namespace ColegioMirim.API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMigrationRunner migrationRunner)
         {
             FluentMigratorConfigExtensions.UseFluentMigratorConfiguration(migrationRunner);
-
-            app.UseSwaggerConfiguration();
 
             app.UseApiConfiguration(env);
         }

@@ -23,13 +23,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColegioMirim.WebApi.MVC", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{60F7C466-E7B3-4897-94DE-77B68D1AAA1E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D83FA4E3-297A-493D-914E-700AA1D2F641}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColegioMirim.WebAPI.Core", "src\building blocks\ColegioMirim.WebAPI.Core\ColegioMirim.WebAPI.Core.csproj", "{31328E24-E284-4AC0-BA88-03D6031D171B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColegioMirim.Domain.Tests", "src\service\tests\ColegioMirim.Domain.Tests\ColegioMirim.Domain.Tests.csproj", "{B01FF5CF-49DE-40E8-AF08-34DDEF7357F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColegioMirim.Domain.Tests", "src\service\tests\ColegioMirim.Domain.Tests\ColegioMirim.Domain.Tests.csproj", "{B01FF5CF-49DE-40E8-AF08-34DDEF7357F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColegioMirim.Application.Tests", "src\service\tests\ColegioMirim.Application.Tests\ColegioMirim.Application.Tests.csproj", "{73FB4DEF-2502-4B7B-9171-E241A9925B62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColegioMirim.Application.Tests", "src\service\tests\ColegioMirim.Application.Tests\ColegioMirim.Application.Tests.csproj", "{73FB4DEF-2502-4B7B-9171-E241A9925B62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColegioMirim.API.Tests", "src\service\tests\ColegioMirim.API.Tests\ColegioMirim.API.Tests.csproj", "{68E03ACC-2A83-499A-B956-685D5166A340}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +73,10 @@ Global
 		{73FB4DEF-2502-4B7B-9171-E241A9925B62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73FB4DEF-2502-4B7B-9171-E241A9925B62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73FB4DEF-2502-4B7B-9171-E241A9925B62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68E03ACC-2A83-499A-B956-685D5166A340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68E03ACC-2A83-499A-B956-685D5166A340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68E03ACC-2A83-499A-B956-685D5166A340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68E03ACC-2A83-499A-B956-685D5166A340}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,10 +89,10 @@ Global
 		{448A89D8-EDAB-4465-8163-EFDFEBC524B1} = {1ED12E58-5B58-4719-BE6D-DFD210B64D3F}
 		{0BBCD89A-F3BD-4670-AC3A-C38232B049E4} = {7C24946D-81C4-4EF2-95D7-F2EA8E7B6801}
 		{60F7C466-E7B3-4897-94DE-77B68D1AAA1E} = {1ED12E58-5B58-4719-BE6D-DFD210B64D3F}
-		{D83FA4E3-297A-493D-914E-700AA1D2F641} = {7C24946D-81C4-4EF2-95D7-F2EA8E7B6801}
 		{31328E24-E284-4AC0-BA88-03D6031D171B} = {C965F22A-0767-4E1E-811E-17571A5715F3}
 		{B01FF5CF-49DE-40E8-AF08-34DDEF7357F9} = {60F7C466-E7B3-4897-94DE-77B68D1AAA1E}
 		{73FB4DEF-2502-4B7B-9171-E241A9925B62} = {60F7C466-E7B3-4897-94DE-77B68D1AAA1E}
+		{68E03ACC-2A83-499A-B956-685D5166A340} = {60F7C466-E7B3-4897-94DE-77B68D1AAA1E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D41A5DC5-122A-4A5A-B465-6B8FCAEAD626}
