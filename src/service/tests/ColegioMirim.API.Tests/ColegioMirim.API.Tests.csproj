@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\building blocks\ColegioMirim.Base.Tests\ColegioMirim.Base.Tests.csproj" />
     <ProjectReference Include="..\..\ColegioMirim.API\ColegioMirim.API.csproj" />
   </ItemGroup>
 

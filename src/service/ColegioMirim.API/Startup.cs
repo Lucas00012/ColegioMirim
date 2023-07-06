@@ -15,11 +15,11 @@ namespace ColegioMirim.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.use
-
             services.AddApiConfiguration(Configuration);
 
             services.AddAuthConfiguration(Configuration);
+
+            services.AddSwaggerConfiguration();
 
             services.AddFluentMigratorConfiguration(Configuration);
 

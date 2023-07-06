@@ -1,18 +1,32 @@
 ﻿using ColegioMirim.Application.Commands.RealizarLogin;
+using ColegioMirim.Application.DTO;
 using ColegioMirim.Application.Services.JwtToken.Models;
+using ColegioMirim.Infrastructure.Data;
+using Dapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Xunit;
 
 namespace ColegioMirim.API.Tests.Setup
 {
+    [CollectionDefinition(nameof(ColegioMirimFixtureCollection))]
+    public class ColegioMirimFixtureCollection : ICollectionFixture<ColegioMirimFixture>
+    {
+
+    }
+
     public class ColegioMirimFixture
     {
         private readonly TestServer _server;
         private string _token;
+
+        public List<int> AlunosIds { get; set; } = new();
+        public List<int> TurmasIds { get; set; } = new();
+        public List<int> VinculosIds { get; set; } = new();
 
         public ColegioMirimFixture()
         {
@@ -38,7 +52,7 @@ namespace ColegioMirim.API.Tests.Setup
             _token = data.AccessToken;
         }
 
-        public static async Task<T> ReadResponse<T>(HttpResponseMessage message)
+        public async Task<T> ReadResponse<T>(HttpResponseMessage message)
         {
             var jsonOptions = new JsonSerializerOptions
             {
@@ -68,6 +82,15 @@ namespace ColegioMirim.API.Tests.Setup
 
         public void Dispose()
         {
+            var context = (ColegioMirimContext)_server.Services.GetService(typeof(ColegioMirimContext));
+
+            context.Connection.Execute(@"
+                delete from AlunoTurma
+                delete from Aluno
+                delete from Turma
+                delete from Usuario where TipoUsuario != 'Administrador'
+            ");
+
             _server.Dispose();
         }
     }
