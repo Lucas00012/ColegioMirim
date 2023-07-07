@@ -9,8 +9,10 @@
             Column = column ?? field;
         }
 
-        public string Field { get; set; }
-        public string Column { get; set; }
-        public string Alias { get; set; }
+        public string Field { get; private set; }
+        public string Column { get; private set; }
+        public string Alias { get; private set; }
+
+        public string Order => $"{(string.IsNullOrEmpty(Alias) ? "" : $"{Alias}.")}{Column}";
     }
 }

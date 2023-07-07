@@ -2,7 +2,7 @@
 using ColegioMirim.Application.Commands.EditarAluno;
 using ColegioMirim.Application.Commands.RegistrarAluno;
 using ColegioMirim.Application.DTO;
-using ColegioMirim.Base.Tests;
+using ColegioMirim.Testing.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;

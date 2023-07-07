@@ -1,7 +1,8 @@
-﻿using Xunit.Abstractions;
+﻿using System.Reflection;
+using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace ColegioMirim.Base.Tests
+namespace ColegioMirim.Testing.Common
 {
     [AttributeUsage(AttributeTargets.Method)]
     public class TestPriorityAttribute : Attribute
@@ -16,6 +17,9 @@ namespace ColegioMirim.Base.Tests
 
     public class PriorityOrderer : ITestCaseOrderer
     {
+        public const string Name = $"ColegioMirim.Testing.Common.{nameof(PriorityOrderer)}";
+        public const string Assembly = "ColegioMirim.Testing.Common";
+
         public IEnumerable<TTestCase> OrderTestCases<TTestCase>(IEnumerable<TTestCase> testCases) where TTestCase : ITestCase
         {
             var sortedMethods = new SortedDictionary<int, List<TTestCase>>();

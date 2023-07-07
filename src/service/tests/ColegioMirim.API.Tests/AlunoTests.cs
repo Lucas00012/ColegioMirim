@@ -2,13 +2,13 @@ using ColegioMirim.API.Tests.Setup;
 using ColegioMirim.Application.Commands.EditarAluno;
 using ColegioMirim.Application.Commands.RegistrarAluno;
 using ColegioMirim.Application.DTO;
-using ColegioMirim.Base.Tests;
+using ColegioMirim.Testing.Common;
 using System.Net;
 using System.Net.Http.Json;
 
 namespace ColegioMirim.API.Tests
 {
-    [TestCaseOrderer("ColegioMirim.Base.Tests.PriorityOrderer", "ColegioMirim.API.Tests")]
+    [TestCaseOrderer(PriorityOrderer.Name, PriorityOrderer.Assembly)]
     [Collection(nameof(ColegioMirimFixtureCollection))]
     public partial class ApiTests
     {
@@ -26,7 +26,7 @@ namespace ColegioMirim.API.Tests
             var body = new RegistrarAlunoCommand
             {
                 Nome = "Lucas Eduardo",
-                RA = "111111",
+                RA = "1111111",
                 Email = "lucas@gmail.com",
                 Senha = "@Aa123123",
                 ConfirmarSenha = "@Aa123123"
@@ -53,7 +53,7 @@ namespace ColegioMirim.API.Tests
             var body = new RegistrarAlunoCommand
             {
                 Nome = "João Silva",
-                RA = "111112",
+                RA = "1111112",
                 Email = "joao@gmail.com",
                 Senha = "@Aa123123",
                 ConfirmarSenha = "@Aa123123"
@@ -80,7 +80,7 @@ namespace ColegioMirim.API.Tests
             var body = new EditarAlunoCommand
             {
                 Nome = "Lucas Eduardo",
-                RA = "111111",
+                RA = "1111111",
                 Email = "lucas_eduardo@gmail.com",
                 Ativo = true
             };
@@ -105,7 +105,7 @@ namespace ColegioMirim.API.Tests
             var body = new RegistrarAlunoCommand
             {
                 Nome = "Lucas Eduardo",
-                RA = "111113",
+                RA = "1111113",
                 Email = "lucas_eduardo@gmail.com",
                 Senha = "@Aa123123",
                 ConfirmarSenha = "@Aa123123"
@@ -130,7 +130,7 @@ namespace ColegioMirim.API.Tests
             var body = new RegistrarAlunoCommand
             {
                 Nome = "Lucas Sousa",
-                RA = "111111",
+                RA = "1111111",
                 Email = "lucas_sousa@gmail.com",
                 Senha = "@Aa123123",
                 ConfirmarSenha = "@Aa123123"
@@ -155,7 +155,7 @@ namespace ColegioMirim.API.Tests
             var body = new EditarAlunoCommand
             {
                 Nome = "João Silva",
-                RA = "111112",
+                RA = "1111112",
                 Email = "lucas_eduardo@gmail.com",
                 Ativo = true
             };
@@ -180,7 +180,7 @@ namespace ColegioMirim.API.Tests
             var body = new EditarAlunoCommand
             {
                 Nome = "João Silva",
-                RA = "111111",
+                RA = "1111111",
                 Email = "joao@gmail.com",
                 Ativo = true
             };

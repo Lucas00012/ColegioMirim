@@ -65,7 +65,7 @@ namespace ColegioMirim.Application.Queries.ListarAlunosTurma
                     @Pesquisa IS NULL 
                     OR a.Nome LIKE '%' + @Pesquisa + '%'
                     OR t.Nome LIKE '%' + @Pesquisa + '%'
-                ORDER BY {orderBy.Alias}.{orderBy.Column} {request.Direction}
+                ORDER BY {orderBy.Order} {request.Direction}
                 OFFSET @Offset ROWS
                 FETCH NEXT @PageSize ROWS ONLY
             ", new

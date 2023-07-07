@@ -2,7 +2,7 @@
 using ColegioMirim.Application.Commands.RegistrarAlunoTurma;
 using ColegioMirim.Application.Commands.RegistrarTurma;
 using ColegioMirim.Application.DTO;
-using ColegioMirim.Base.Tests;
+using ColegioMirim.Testing.Common;
 using System.Net;
 using System.Net.Http.Json;
 

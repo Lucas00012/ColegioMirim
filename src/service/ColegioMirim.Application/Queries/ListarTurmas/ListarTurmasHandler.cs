@@ -85,7 +85,7 @@ namespace ColegioMirim.Application.Queries.ListarTurmas
                             WHERE at.TurmaId = t.Id AND a.UsuarioId = @UsuarioId AND at.Ativo = 1 AND t.Ativo = 1
                         )
                     )
-                ORDER BY {orderBy.Alias}.{orderBy.Column} {request.Direction}
+                ORDER BY {orderBy.Order} {request.Direction}
                 OFFSET @Offset ROWS
                 FETCH NEXT @PageSize ROWS ONLY
             ", new

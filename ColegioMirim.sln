@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColegioMirim.Application.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColegioMirim.API.Tests", "src\service\tests\ColegioMirim.API.Tests\ColegioMirim.API.Tests.csproj", "{68E03ACC-2A83-499A-B956-685D5166A340}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColegioMirim.Base.Tests", "src\building blocks\ColegioMirim.Base.Tests\ColegioMirim.Base.Tests.csproj", "{0FD13A56-B96C-4BE7-ACE9-C3E5EB422DB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColegioMirim.Testing.Common", "src\building blocks\ColegioMirim.Testing.Common\ColegioMirim.Testing.Common.csproj", "{F56A77A1-24C2-4776-B2B4-849B65F14746}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,10 +79,10 @@ Global
 		{68E03ACC-2A83-499A-B956-685D5166A340}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68E03ACC-2A83-499A-B956-685D5166A340}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68E03ACC-2A83-499A-B956-685D5166A340}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0FD13A56-B96C-4BE7-ACE9-C3E5EB422DB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FD13A56-B96C-4BE7-ACE9-C3E5EB422DB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0FD13A56-B96C-4BE7-ACE9-C3E5EB422DB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0FD13A56-B96C-4BE7-ACE9-C3E5EB422DB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F56A77A1-24C2-4776-B2B4-849B65F14746}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F56A77A1-24C2-4776-B2B4-849B65F14746}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F56A77A1-24C2-4776-B2B4-849B65F14746}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F56A77A1-24C2-4776-B2B4-849B65F14746}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,7 +99,7 @@ Global
 		{B01FF5CF-49DE-40E8-AF08-34DDEF7357F9} = {60F7C466-E7B3-4897-94DE-77B68D1AAA1E}
 		{73FB4DEF-2502-4B7B-9171-E241A9925B62} = {60F7C466-E7B3-4897-94DE-77B68D1AAA1E}
 		{68E03ACC-2A83-499A-B956-685D5166A340} = {60F7C466-E7B3-4897-94DE-77B68D1AAA1E}
-		{0FD13A56-B96C-4BE7-ACE9-C3E5EB422DB8} = {C965F22A-0767-4E1E-811E-17571A5715F3}
+		{F56A77A1-24C2-4776-B2B4-849B65F14746} = {C965F22A-0767-4E1E-811E-17571A5715F3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D41A5DC5-122A-4A5A-B465-6B8FCAEAD626}

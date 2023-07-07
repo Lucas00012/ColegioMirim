@@ -80,7 +80,7 @@ namespace ColegioMirim.Application.Queries.ListarAlunos
                         @IsAdmin = 1 
                         OR a.UsuarioId = @UsuarioId AND a.Ativo = 1
                     )
-                ORDER BY {orderBy.Alias}.{orderBy.Column} {request.Direction}
+                ORDER BY {orderBy.Order} {request.Direction}
                 OFFSET @Offset ROWS
                 FETCH NEXT @PageSize ROWS ONLY
             ", new

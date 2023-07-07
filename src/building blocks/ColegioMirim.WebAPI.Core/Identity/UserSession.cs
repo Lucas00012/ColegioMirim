@@ -17,7 +17,7 @@ namespace ColegioMirim.WebAPI.Core.Identity
             Roles = ExtractRoles();
             IsAuthenticated = _httpContext?.User.Identity.IsAuthenticated ?? false;
             Browser = _httpContext?.Request.Headers["User-Agent"];
-            Ip = _httpContext?.Connection.RemoteIpAddress.ToString();
+            Ip = _httpContext?.Connection.RemoteIpAddress?.ToString();
         }
 
         public int? UsuarioId { get; private set; }

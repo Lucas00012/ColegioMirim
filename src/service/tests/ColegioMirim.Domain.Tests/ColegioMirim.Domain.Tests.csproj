@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\building blocks\ColegioMirim.Base.Tests\ColegioMirim.Base.Tests.csproj" />
+    <ProjectReference Include="..\..\..\building blocks\ColegioMirim.Testing.Common\ColegioMirim.Testing.Common.csproj" />
     <ProjectReference Include="..\..\ColegioMirim.Domain\ColegioMirim.Domain.csproj" />
   </ItemGroup>
 

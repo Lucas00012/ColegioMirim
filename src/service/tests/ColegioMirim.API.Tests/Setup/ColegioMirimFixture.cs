@@ -1,15 +1,12 @@
 ﻿using ColegioMirim.Application.Commands.RealizarLogin;
-using ColegioMirim.Application.DTO;
 using ColegioMirim.Application.Services.JwtToken.Models;
 using ColegioMirim.Infrastructure.Data;
 using Dapper;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Xunit;
 
 namespace ColegioMirim.API.Tests.Setup
 {
@@ -19,9 +16,9 @@ namespace ColegioMirim.API.Tests.Setup
 
     }
 
-    public class ColegioMirimFixture
+    public class ColegioMirimFixture : IDisposable
     {
-        private readonly TestServer _server;
+        private readonly ColegioMirimFactory _factory;
         private string _token;
 
         public List<int> AlunosIds { get; set; } = new();
@@ -30,9 +27,7 @@ namespace ColegioMirim.API.Tests.Setup
 
         public ColegioMirimFixture()
         {
-            _server = new TestServer(new WebHostBuilder()
-                .UseStartup<TestStartup>()
-                .UseEnvironment("Testing"));
+            _factory = new ColegioMirimFactory();
         }
 
         public async Task RealizarLogin()
@@ -66,7 +61,7 @@ namespace ColegioMirim.API.Tests.Setup
 
         public HttpClient CreateDefaultClient()
         {
-            var httpClient = _server.CreateClient();
+            var httpClient = _factory.CreateClient();
 
             httpClient.DefaultRequestHeaders.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -82,7 +77,7 @@ namespace ColegioMirim.API.Tests.Setup
 
         public void Dispose()
         {
-            var context = (ColegioMirimContext)_server.Services.GetService(typeof(ColegioMirimContext));
+            var context = _factory.Services.GetService<ColegioMirimContext>();
 
             context.Connection.Execute(@"
                 delete from AlunoTurma
@@ -90,8 +85,6 @@ namespace ColegioMirim.API.Tests.Setup
                 delete from Turma
                 delete from Usuario where TipoUsuario != 'Administrador'
             ");
-
-            _server.Dispose();
         }
     }
 }
