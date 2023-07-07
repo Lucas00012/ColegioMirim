@@ -32,7 +32,7 @@ namespace ColegioMirim.Application.Queries.ListarTurmas
             };
 
             var orderBy = orderByOptions
-                .FirstOrDefault(c => c.Field == request.OrderBy) ?? orderByOptions.First();
+                .FirstOrDefault(c => c.Equals(request.OrderBy)) ?? orderByOptions.First();
 
             var count = await _context.Connection.QuerySingleAsync<int>($@"
                 SELECT 

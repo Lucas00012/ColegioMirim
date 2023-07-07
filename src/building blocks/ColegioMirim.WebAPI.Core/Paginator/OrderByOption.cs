@@ -14,5 +14,10 @@
         public string Alias { get; private set; }
 
         public string Order => $"{(string.IsNullOrEmpty(Alias) ? "" : $"{Alias}.")}{Column}";
+
+        public bool Equals(string identifier)
+        {
+            return Field.Equals(identifier, StringComparison.InvariantCultureIgnoreCase);
+        }
     }
 }
