@@ -12,7 +12,7 @@ namespace ColegioMirim.Domain.Tests
         [InlineData("ab")]
         [InlineData("1234567abc")]
         [InlineData("1234567")]
-        [InlineData("lucas     eduardo    ormond")]
+        [InlineData("lucas     eduardo        ormond")]
         [InlineData("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
         public void NomeAlunoValidoRule_NomeAlunoInvalido_DeveEstarInvalido(string nomeAluno)
         {
