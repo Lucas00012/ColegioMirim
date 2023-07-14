@@ -79,7 +79,8 @@ namespace ColegioMirim.API.Tests.Setup
         {
             var context = _factory.Services.GetService<ColegioMirimContext>();
 
-            context.Connection.Execute(@"
+            using var connection = context.BuildConnection();
+            connection.Execute(@"
                 delete from AlunoTurma
                 delete from Aluno
                 delete from Turma

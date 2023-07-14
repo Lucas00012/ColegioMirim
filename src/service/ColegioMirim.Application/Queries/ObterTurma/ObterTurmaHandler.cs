@@ -22,7 +22,8 @@ namespace ColegioMirim.Application.Queries.ObterTurma
 
         public async Task<TurmaDTO> Handle(ObterTurmaQuery request, CancellationToken cancellationToken)
         {
-            var dto = await _context.Connection.QuerySingleAsync<TurmaDTO>(@"
+            using var connection = _context.BuildConnection();
+            var dto = await connection.QuerySingleAsync<TurmaDTO>(@"
                 SELECT
                     t.Id,
                     t.Nome,

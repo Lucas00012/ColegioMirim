@@ -22,7 +22,8 @@ namespace ColegioMirim.Application.Queries.ObterAluno
 
         public async Task<AlunoDTO> Handle(ObterAlunoQuery request, CancellationToken cancellationToken)
         {
-            var dto = await _context.Connection.QuerySingleAsync<AlunoDTO>(@"
+            using var connection = _context.BuildConnection();
+            var dto = await connection.QuerySingleAsync<AlunoDTO>(@"
                 SELECT
                     a.Id,
                     a.RA,

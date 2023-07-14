@@ -7,11 +7,11 @@ namespace ColegioMirim.API.Common.Filters
 {
     public class UnitOfWorkFilter : IAsyncActionFilter
     {
-        private readonly ColegioMirimContext _context;
+        private readonly IUnityOfWork _unityOfWork;
 
-        public UnitOfWorkFilter(ColegioMirimContext context)
+        public UnitOfWorkFilter(IUnityOfWork unityOfWork)
         {
-            _context = context;
+            _unityOfWork = unityOfWork;
         }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
@@ -22,14 +22,16 @@ namespace ColegioMirim.API.Common.Filters
                 return;
             }
 
+            _unityOfWork.BeginTransaction();
+
             var actionExecuted = await next();
 
             if (actionExecuted.Exception != null && !actionExecuted.ExceptionHandled
                 || actionExecuted.Result is ObjectResult objectResult && objectResult.StatusCode >= 400
                 || actionExecuted.Result is StatusCodeResult statusCodeResult && statusCodeResult.StatusCode >= 400)
-                _context.ClearTransaction();
+                _unityOfWork.RollbackTransaction();
             else
-                _context.CommitTransaction();
+                _unityOfWork.CommitTransaction();
         }
     }
 }

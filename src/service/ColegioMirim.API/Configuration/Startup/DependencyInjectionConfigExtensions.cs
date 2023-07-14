@@ -28,14 +28,12 @@ namespace ColegioMirim.API.Configuration.Startup
             services.AddScoped<JwtTokenService>();
 
             services.AddScoped<ColegioMirimContext>();
-            //services.AddScoped<IUnityOfWork, ColegioMirimContext>();
+            services.AddScoped<IUnityOfWork, UnityOfWork>();
 
             services.AddScoped<ITurmaRepository, TurmaRepository>();
             services.AddScoped<IAlunoRepository, AlunoRepository>();
             services.AddScoped<IAlunoTurmaRepository, AlunoTurmaRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-
-            //TransactionManager.ImplicitDistributedTransactions = true;
         }
     }
 }

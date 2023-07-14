@@ -35,7 +35,8 @@ namespace ColegioMirim.Application.Queries.ListarAlunosTurma
             var orderBy = orderByOptions
                 .FirstOrDefault(c => c.Equals(request.OrderBy)) ?? orderByOptions.First();
 
-            var count = await _context.Connection.QuerySingleAsync<int>($@"
+            using var connection = _context.BuildConnection();
+            var count = await connection.QuerySingleAsync<int>($@"
                 SELECT 
                     COUNT(a.Id)
                 FROM AlunoTurma AS at
@@ -47,7 +48,7 @@ namespace ColegioMirim.Application.Queries.ListarAlunosTurma
                     OR t.Nome LIKE '%' + @Pesquisa + '%'
             ", new { request.Pesquisa });
 
-            var alunos = await _context.Connection.QueryAsync<AlunoTurmaDTO>($@"
+            var alunos = await connection.QueryAsync<AlunoTurmaDTO>($@"
                 SELECT
                     at.Id,
                     at.AlunoId,
