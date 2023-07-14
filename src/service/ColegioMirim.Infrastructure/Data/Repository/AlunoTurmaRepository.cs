@@ -14,8 +14,9 @@ namespace ColegioMirim.Infrastructure.Data.Repository
 
         public async Task<int> Count()
         {
+            using var connection = _context.BuildConnection();
             var sql = "SELECT COUNT(*) FROM AlunoTurma";
-            var count = await _context.Connection.QuerySingleAsync<int>(sql);
+            var count = await connection.QuerySingleAsync<int>(sql);
 
             return count;
         }
@@ -31,39 +32,44 @@ namespace ColegioMirim.Infrastructure.Data.Repository
                 VALUES (@Ativo, @AlunoId, @TurmaId, @CreatedAt, null)
             ";
 
-            alunoTurma.Id = await _context.Connection.QuerySingleAsync<int>(sql, alunoTurma);
+            using var connection = _context.BuildConnection();
+            alunoTurma.Id = await connection.QuerySingleAsync<int>(sql, alunoTurma);
 
             return alunoTurma;
         }
 
         public async Task<int> Delete(AlunoTurma alunoTurma)
         {
+            using var connection = _context.BuildConnection();
             var sql = "DELETE FROM AlunoTurma WHERE Id = @Id";
-            var result = await _context.Connection.ExecuteAsync(sql, alunoTurma);
+            var result = await connection.ExecuteAsync(sql, alunoTurma);
 
             return result;
         }
 
         public async Task<List<AlunoTurma>> GetAll()
         {
+            using var connection = _context.BuildConnection();
             var sql = "SELECT * FROM AlunoTurma";
-            var alunosTurma = await _context.Connection.QueryAsync<AlunoTurma>(sql);
+            var alunosTurma = await connection.QueryAsync<AlunoTurma>(sql);
 
             return alunosTurma.ToList();
         }
 
         public async Task<AlunoTurma> GetById(int id)
         {
+            using var connection = _context.BuildConnection();
             var sql = "SELECT * FROM AlunoTurma WHERE Id = @Id";
-            var alunosTurma = await _context.Connection.QuerySingleOrDefaultAsync<AlunoTurma>(sql, new { Id = id });
+            var alunosTurma = await connection.QuerySingleOrDefaultAsync<AlunoTurma>(sql, new { Id = id });
 
             return alunosTurma;
         }
 
         public async Task<AlunoTurma> GetByAlunoIdTurmaId(int alunoId, int turmaId)
         {
+            using var connection = _context.BuildConnection();
             var sql = "SELECT * FROM AlunoTurma WHERE AlunoId = @AlunoId AND TurmaId = @TurmaId";
-            var alunosTurma = await _context.Connection.QuerySingleOrDefaultAsync<AlunoTurma>(sql, new { AlunoId = alunoId, TurmaId = turmaId });
+            var alunosTurma = await connection.QuerySingleOrDefaultAsync<AlunoTurma>(sql, new { AlunoId = alunoId, TurmaId = turmaId });
 
             return alunosTurma;
         }
@@ -82,7 +88,8 @@ namespace ColegioMirim.Infrastructure.Data.Repository
                 WHERE a.UsuarioId = @UsuarioId AND at.TurmaId = @TurmaId
             ";
 
-            var alunosTurma = await _context.Connection.QuerySingleOrDefaultAsync<AlunoTurma>(sql, new { UsuarioId = usuarioId, TurmaId = turmaId });
+            using var connection = _context.BuildConnection();
+            var alunosTurma = await connection.QuerySingleOrDefaultAsync<AlunoTurma>(sql, new { UsuarioId = usuarioId, TurmaId = turmaId });
 
             return alunosTurma;
         }
@@ -91,8 +98,9 @@ namespace ColegioMirim.Infrastructure.Data.Repository
         {
             alunoTurma.UpdatedAt = DateTimeOffset.Now;
 
+            using var connection = _context.BuildConnection();
             var sql = "UPDATE AlunoTurma SET AlunoId = @AlunoId, TurmaId = @TurmaId, Ativo = @Ativo, CreatedAt = @CreatedAt, UpdatedAt = @UpdatedAt WHERE Id = @Id";
-            var result = await _context.Connection.ExecuteAsync(sql, alunoTurma);
+            var result = await connection.ExecuteAsync(sql, alunoTurma);
 
             return result;
         }

@@ -34,7 +34,8 @@ namespace ColegioMirim.Application.Queries.ListarAlunos
             var orderBy = orderByOptions
                 .FirstOrDefault(c => c.Equals(request.OrderBy)) ?? orderByOptions.First();
 
-            var count = await _context.Connection.QuerySingleAsync<int>($@"
+            using var connection = _context.BuildConnection();
+            var count = await connection.QuerySingleAsync<int>($@"
                 SELECT 
                     COUNT(a.Id)
                 FROM Aluno AS a
@@ -58,7 +59,7 @@ namespace ColegioMirim.Application.Queries.ListarAlunos
                 _userSession.IsAdmin
             });
 
-            var alunos = await _context.Connection.QueryAsync<AlunoDTO>($@"
+            var alunos = await connection.QueryAsync<AlunoDTO>($@"
                 SELECT 
                     a.Id,
                     a.RA,

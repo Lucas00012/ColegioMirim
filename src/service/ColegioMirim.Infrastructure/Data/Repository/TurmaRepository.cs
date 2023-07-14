@@ -15,8 +15,9 @@ namespace ColegioMirim.Infrastructure.Data.Repository
 
         public async Task<int> Count()
         {
+            using var connection = _context.BuildConnection();
             var sql = "SELECT COUNT(*) FROM Turma";
-            var count = await _context.Connection.QuerySingleAsync<int>(sql);
+            var count = await connection.QuerySingleAsync<int>(sql);
 
             return count;
         }
@@ -32,30 +33,35 @@ namespace ColegioMirim.Infrastructure.Data.Repository
                 VALUES (@Nome, @Ativo, @Ano, @CreatedAt, null)
             ";
 
-            turma.Id = await _context.Connection.QuerySingleAsync<int>(sql, turma);
+            using var connection = _context.BuildConnection();
+            turma.Id = await connection.QuerySingleAsync<int>(sql, turma);
+
             return turma;
         }
 
         public async Task<List<Turma>> GetAll()
         {
+            using var connection = _context.BuildConnection();
             var sql = "SELECT * FROM Turma";
-            var turma = await _context.Connection.QueryAsync<Turma>(sql);
+            var turma = await connection.QueryAsync<Turma>(sql);
 
             return turma.ToList();
         }
 
         public async Task<Turma> GetById(int id)
         {
+            using var connection = _context.BuildConnection();
             var sql = "SELECT * FROM Turma WHERE Id = @Id";
-            var turma = await _context.Connection.QuerySingleOrDefaultAsync<Turma>(sql, new { Id = id });
+            var turma = await connection.QuerySingleOrDefaultAsync<Turma>(sql, new { Id = id });
 
             return turma;
         }
 
         public async Task<Turma> GetByName(string name)
         {
+            using var connection = _context.BuildConnection();
             var sql = "SELECT * FROM Turma WHERE Nome = @Name";
-            var turma = await _context.Connection.QuerySingleOrDefaultAsync<Turma>(sql, new { Name = name });
+            var turma = await connection.QuerySingleOrDefaultAsync<Turma>(sql, new { Name = name });
 
             return turma;
         }
@@ -64,8 +70,9 @@ namespace ColegioMirim.Infrastructure.Data.Repository
         {
             turma.UpdatedAt = DateTimeOffset.Now;
 
+            using var connection = _context.BuildConnection();
             var sql = "UPDATE Turma SET Nome = @Nome, Ativo = @Ativo, Ano = @Ano, CreatedAt = @CreatedAt, UpdatedAt = @UpdatedAt WHERE Id = @Id";
-            var result = await _context.Connection.ExecuteAsync(sql, turma);
+            var result = await connection.ExecuteAsync(sql, turma);
 
             return result;
         }

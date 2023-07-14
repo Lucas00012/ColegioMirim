@@ -9,6 +9,7 @@ using ColegioMirim.Domain.Usuarios;
 using ColegioMirim.Infrastructure.Data;
 using ColegioMirim.Infrastructure.Data.Repository;
 using ColegioMirim.WebAPI.Core.Identity;
+using System.Transactions;
 
 namespace ColegioMirim.API.Configuration.Startup
 {

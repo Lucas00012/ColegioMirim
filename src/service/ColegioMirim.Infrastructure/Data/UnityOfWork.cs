@@ -18,6 +18,11 @@ namespace ColegioMirim.Infrastructure.Data
             }
         }
 
+        public void RollbackTransaction()
+        {
+            ClearTransaction();
+        }
+
         public void CommitTransaction()
         {
             try
@@ -37,11 +42,8 @@ namespace ColegioMirim.Infrastructure.Data
 
         public void ClearTransaction()
         {
-            if (HasTransaction())
-            {
-                _transaction.Dispose();
-                _transaction = null;
-            }
+            _transaction?.Dispose();
+            _transaction = null;
         }
     }
 }

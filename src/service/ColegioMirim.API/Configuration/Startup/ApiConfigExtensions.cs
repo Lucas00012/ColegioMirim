@@ -11,7 +11,7 @@ namespace ColegioMirim.API.Configuration.Startup
             services.AddControllers()
                 .AddMvcOptions(opt =>
                 {
-                    opt.Filters.Add(typeof(AlunoValidoFilter));
+                    //opt.Filters.Add(typeof(AlunoValidoFilter));
                     opt.Filters.Add(typeof(UnitOfWorkFilter));
                     opt.Filters.Add(typeof(ExceptionFilter));
                 })

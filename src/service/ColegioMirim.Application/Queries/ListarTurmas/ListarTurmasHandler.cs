@@ -34,7 +34,8 @@ namespace ColegioMirim.Application.Queries.ListarTurmas
             var orderBy = orderByOptions
                 .FirstOrDefault(c => c.Equals(request.OrderBy)) ?? orderByOptions.First();
 
-            var count = await _context.Connection.QuerySingleAsync<int>($@"
+            var connection = _context.BuildConnection();
+            var count = await connection.QuerySingleAsync<int>($@"
                 SELECT 
                     COUNT(t.Id)
                 FROM Turma AS t
@@ -61,7 +62,7 @@ namespace ColegioMirim.Application.Queries.ListarTurmas
                 _userSession.IsAdmin
             });
 
-            var turmas = await _context.Connection.QueryAsync<TurmaDTO>($@"
+            var turmas = await connection.QueryAsync<TurmaDTO>($@"
                 SELECT
                     t.Id,
                     t.Nome,

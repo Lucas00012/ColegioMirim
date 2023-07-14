@@ -4,29 +4,18 @@ using System.Data.SqlClient;
 
 namespace ColegioMirim.Infrastructure.Data
 {
-    public class ColegioMirimContext : IDisposable
+    public class ColegioMirimContext
     {
         private readonly IConfiguration _configuration;
-        public IDbConnection Connection { get; private set; }
 
         public ColegioMirimContext(IConfiguration configuration)
         {
             _configuration = configuration;
-            Connection = BuildConnection();
         }
 
-        private IDbConnection BuildConnection()
+        public IDbConnection BuildConnection()
         {
-            var connection = new SqlConnection(_configuration.GetConnectionString("Default"));
-            connection.Open();
-
-            return connection;
-        }
-
-        public void Dispose()
-        {
-            Connection?.Close();
-            Connection?.Dispose();
+            return new SqlConnection(_configuration.GetConnectionString("Default"));
         }
     }
 }
