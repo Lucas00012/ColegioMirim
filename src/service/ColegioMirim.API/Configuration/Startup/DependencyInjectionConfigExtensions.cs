@@ -9,6 +9,7 @@ using ColegioMirim.Domain.Usuarios;
 using ColegioMirim.Infrastructure.Data;
 using ColegioMirim.Infrastructure.Data.Repository;
 using ColegioMirim.WebAPI.Core.Identity;
+using System.Transactions;
 
 namespace ColegioMirim.API.Configuration.Startup
 {
@@ -27,12 +28,14 @@ namespace ColegioMirim.API.Configuration.Startup
             services.AddScoped<JwtTokenService>();
 
             services.AddScoped<ColegioMirimContext>();
-            services.AddScoped<IUnityOfWork, UnityOfWork>();
+            //services.AddScoped<IUnityOfWork, ColegioMirimContext>();
 
             services.AddScoped<ITurmaRepository, TurmaRepository>();
             services.AddScoped<IAlunoRepository, AlunoRepository>();
             services.AddScoped<IAlunoTurmaRepository, AlunoTurmaRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+
+            //TransactionManager.ImplicitDistributedTransactions = true;
         }
     }
 }

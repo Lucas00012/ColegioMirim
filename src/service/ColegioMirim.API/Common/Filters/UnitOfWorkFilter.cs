@@ -1,4 +1,5 @@
 ﻿using ColegioMirim.Core.Data;
+using ColegioMirim.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -6,11 +7,11 @@ namespace ColegioMirim.API.Common.Filters
 {
     public class UnitOfWorkFilter : IAsyncActionFilter
     {
-        private readonly IUnityOfWork _unityOfWork;
+        private readonly ColegioMirimContext _context;
 
-        public UnitOfWorkFilter(IUnityOfWork unityOfWork)
+        public UnitOfWorkFilter(ColegioMirimContext context)
         {
-            _unityOfWork = unityOfWork;
+            _context = context;
         }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
@@ -21,23 +22,14 @@ namespace ColegioMirim.API.Common.Filters
                 return;
             }
 
-            try
-            {
-                _unityOfWork.BeginTransaction();
+            var actionExecuted = await next();
 
-                var actionExecuted = await next();
-
-                if (actionExecuted.Exception != null && !actionExecuted.ExceptionHandled
-                    || actionExecuted.Result is ObjectResult objectResult && objectResult.StatusCode >= 400
-                    || actionExecuted.Result is StatusCodeResult statusCodeResult && statusCodeResult.StatusCode >= 400)
-                    _unityOfWork.ClearTransaction();
-                else
-                    _unityOfWork.CommitTransaction();
-            }
-            catch (Exception)
-            {
-                _unityOfWork.ClearTransaction();
-            }
+            if (actionExecuted.Exception != null && !actionExecuted.ExceptionHandled
+                || actionExecuted.Result is ObjectResult objectResult && objectResult.StatusCode >= 400
+                || actionExecuted.Result is StatusCodeResult statusCodeResult && statusCodeResult.StatusCode >= 400)
+                _context.ClearTransaction();
+            else
+                _context.CommitTransaction();
         }
     }
 }
